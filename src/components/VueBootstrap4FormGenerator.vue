@@ -11,6 +11,7 @@
                 <template v-if="element.type === 'Array'">
                     <div v-if="element.schema.type === 'Object'" v-for="(value, key, index) in model[element.name]" :key="index">
                         <vue-bootstrap4-form-generator  :model="value" :schema="element.schema" />
+                        <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add</button>
                     </div>
                     <div v-if="element.schema.type === 'input'">
                         <label>{{element.schema.element.label}}</label>
@@ -26,6 +27,7 @@
             <div v-for="(value, key, index) in model" :key="index">
                 <vue-bootstrap4-form-generator  :model="value" :schema="schema.schema" />
             </div>
+            <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add</button>
         </template>
         <template v-else-if="schema.type === 'input'">
             <input-element :element="schema.element" :model.sync="model" @remove-key="removeKey"/>
@@ -74,6 +76,10 @@ export default {
         },
         updateValue(payload) {
             this.model[payload.name][payload.index] = payload.value;
+        },
+        addModel() {
+            let model = _.cloneDeep(this.model[0]);
+            this.model.push(model);
         }
     },
     components: {

@@ -15,38 +15,36 @@
         data: function() {
             return {
                 model: {
-                    "root_id":"111",
+                    "root_id": "111",
 
-                    "users":[
-                    {
-                        "id": 1,
-                        "name": {
-                            "first_name": "Vladimir",
-                            "last_name": "Nitzsche"
+                    "users": [{
+                            "id": 1,
+                            "name": {
+                                "first_name": "Vladimir",
+                                "last_name": "Nitzsche"
+                            },
+                            "address": {
+                                "country": "Mayotte"
+                            },
+                            "email": "franecki.anastasia@gmail.com",
                         },
-                        "address": {
-                            "country": "Mayotte"
+                        {
+                            "id": 2,
+                            "name": {
+                                "first_name": "Rubanraj",
+                                "last_name": "Ravichandran"
+                            },
+                            "address": {
+                                "country": "Germany"
+                            },
+                            "email": "rubanraj54@gmail.com",
                         },
-                        "email": "franecki.anastasia@gmail.com",
-                    },
-                    {
-                        "id": 2,
-                        "name": {
-                            "first_name": "Rubanraj",
-                            "last_name": "Ravichandran"
-                        },
-                        "address": {
-                            "country": "Germany"
-                        },
-                        "email": "rubanraj54@gmail.com",
-                    },
-                ],
-                    "category": ['age','blog']
+                    ],
+                    "category": ['age', 'blog']
                 },
                 schema: {
                     type: "Object",
-                    elements: [
-                        {
+                    elements: [{
                             label: "Root id",
                             name: "root_id",
                             element_type: "input",
@@ -58,8 +56,7 @@
                             type: "Array",
                             schema: {
                                 type: "Object",
-                                elements: [
-                                    {
+                                elements: [{
                                         label: "ID",
                                         name: "id",
                                         element_type: "input",
@@ -77,8 +74,7 @@
                                         label: "Name",
                                         name: "name",
                                         type: "Object",
-                                        elements: [
-                                            {
+                                        elements: [{
                                                 label: "First Name",
                                                 name: "first_name",
                                                 element_type: "input",
@@ -96,21 +92,16 @@
                             }
                         },
                         {
-                            name:"category",
+                            name: "category",
                             type: "Array",
                             schema: {
                                 type: "input",
-                                // label: "Category",
-                                // element_type: "input",
-                                // type: "number",
-                                // placeholder: "Enter Category"
-                                element:
-                                    {
-                                        label: "Category",
-                                        element_type: "input",
-                                        type: "text",
-                                        placeholder: "Enter category"
-                                    }
+                                element: {
+                                    label: "Category",
+                                    element_type: "input",
+                                    type: "text",
+                                    placeholder: "Enter category"
+                                }
                             }
                         }
 
