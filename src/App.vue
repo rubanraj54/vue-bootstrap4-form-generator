@@ -14,54 +14,70 @@
         name: 'App',
         data: function() {
             return {
-                model: {
-                    "id": 1,
-                    "name": {
-                        "first_name": "Vladimir",
-                        "last_name": "Nitzsche"
+                model: [
+                    {
+                        "id": 1,
+                        "name": {
+                            "first_name": "Vladimir",
+                            "last_name": "Nitzsche"
+                        },
+                        "address": {
+                            "country": "Mayotte"
+                        },
+                        "email": "franecki.anastasia@gmail.com",
                     },
-                    "address": {
-                        "country": "Mayotte"
-                    },
-                    "email": "franecki.anastasia@gmail.com",
-                },
+                    {
+                        "id": 2,
+                        "name": {
+                            "first_name": "Rubanraj",
+                            "last_name": "Ravichandran"
+                        },
+                        "address": {
+                            "country": "Germany"
+                        },
+                        "email": "rubanraj54@gmail.com",
+                    }
+                ],
                 schema: {
-                    type: "Object",
-                    elements: [
-                        {
-                            label: "ID",
-                            name: "id",
-                            element_type: "input",
-                            type: "number",
-                            placeholder: "Enter Id"
-                        },
-                        {
-                            label: "Email",
-                            name: "email",
-                            element_type: "input",
-                            type: "email",
-                            placeholder: "Enter Email"
-                        },
-                        {
-                            label: "Name",
-                            name: "name",
-                            type: "Object",
-                            elements: [
-                                {
-                                    label: "First Name",
-                                    name: "first_name",
-                                    element_type: "input",
-                                    input_type: "text"
-                                },
-                                {
-                                    label: "Last Name",
-                                    name: "last_name",
-                                    element_type: "input",
-                                    input_type: "text"
-                                },
-                            ]
-                        }
-                    ]
+                    type: "Array",
+                    schema: {
+                        type: "Object",
+                        elements: [
+                            {
+                                label: "ID",
+                                name: "id",
+                                element_type: "input",
+                                type: "number",
+                                placeholder: "Enter Id"
+                            },
+                            {
+                                label: "Email",
+                                name: "email",
+                                element_type: "input",
+                                type: "email",
+                                placeholder: "Enter Email"
+                            },
+                            {
+                                label: "Name",
+                                name: "name",
+                                type: "Object",
+                                elements: [
+                                    {
+                                        label: "First Name",
+                                        name: "first_name",
+                                        element_type: "input",
+                                        input_type: "text"
+                                    },
+                                    {
+                                        label: "Last Name",
+                                        name: "last_name",
+                                        element_type: "input",
+                                        input_type: "text"
+                                    },
+                                ]
+                            }
+                        ]
+                    }
                 }
             }
         },
