@@ -24,8 +24,14 @@
             </div>
         </template>
         <template v-else-if="schema.type === 'Array'">
-            <div v-for="(value, key, index) in model" :key="index">
-                <vue-bootstrap4-form-generator  :model="value" :schema="schema.schema" />
+            <div v-for="(value, key, index) in model" :key="index" class="card">
+                <div class="card-header">
+                    {{schema.name}}
+                    <div class="float-right">
+                        <button type="button" class="btn btn-sm btn-warning" @click="removeModel(index)">Remove</button>
+                    </div>
+                </div>
+                <vue-bootstrap4-form-generator :model="value" :schema="schema.schema" class="card-body"/>
             </div>
             <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add</button>
         </template>
@@ -80,7 +86,10 @@ export default {
         addModel() {
             let model = _.cloneDeep(this.model[0]);
             this.model.push(model);
-        }
+        },
+        removeModel(index) {
+            this.model.splice(index,1);
+        },
     },
     components: {
         VueBootstrap4FormGenerator,
