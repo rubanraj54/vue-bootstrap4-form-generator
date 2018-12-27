@@ -14,7 +14,10 @@
         name: 'App',
         data: function() {
             return {
-                model: [
+                model: {
+                    "root_id":"111",
+
+                    "users":[
                     {
                         "id": 1,
                         "name": {
@@ -36,48 +39,83 @@
                             "country": "Germany"
                         },
                         "email": "rubanraj54@gmail.com",
-                    }
+                    },
                 ],
+                    "category": ['age','blog']
+                },
                 schema: {
-                    type: "Array",
-                    schema: {
-                        type: "Object",
-                        elements: [
-                            {
-                                label: "ID",
-                                name: "id",
-                                element_type: "input",
-                                type: "number",
-                                placeholder: "Enter Id"
-                            },
-                            {
-                                label: "Email",
-                                name: "email",
-                                element_type: "input",
-                                type: "email",
-                                placeholder: "Enter Email"
-                            },
-                            {
-                                label: "Name",
-                                name: "name",
+                    type: "Object",
+                    elements: [
+                        {
+                            label: "Root id",
+                            name: "root_id",
+                            element_type: "input",
+                            type: "text",
+                            placeholder: "Enter root id"
+                        },
+                        {
+                            name: "users",
+                            type: "Array",
+                            schema: {
                                 type: "Object",
                                 elements: [
                                     {
-                                        label: "First Name",
-                                        name: "first_name",
+                                        label: "ID",
+                                        name: "id",
                                         element_type: "input",
-                                        input_type: "text"
+                                        type: "number",
+                                        placeholder: "Enter Id"
                                     },
                                     {
-                                        label: "Last Name",
-                                        name: "last_name",
+                                        label: "Email",
+                                        name: "email",
                                         element_type: "input",
-                                        input_type: "text"
+                                        type: "email",
+                                        placeholder: "Enter Email"
                                     },
+                                    {
+                                        label: "Name",
+                                        name: "name",
+                                        type: "Object",
+                                        elements: [
+                                            {
+                                                label: "First Name",
+                                                name: "first_name",
+                                                element_type: "input",
+                                                input_type: "text"
+                                            },
+                                            {
+                                                label: "Last Name",
+                                                name: "last_name",
+                                                element_type: "input",
+                                                input_type: "text"
+                                            },
+                                        ]
+                                    }
                                 ]
                             }
-                        ]
-                    }
+                        },
+                        {
+                            name:"category",
+                            type: "Array",
+                            schema: {
+                                type: "input",
+                                // label: "Category",
+                                // element_type: "input",
+                                // type: "number",
+                                // placeholder: "Enter Category"
+                                element:
+                                    {
+                                        label: "Category",
+                                        element_type: "input",
+                                        type: "text",
+                                        placeholder: "Enter category"
+                                    }
+                            }
+                        }
+
+                    ],
+
                 }
             }
         },

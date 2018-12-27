@@ -8,17 +8,20 @@
                 <template v-if="element.type === 'Object' && hasAttributeCheck(element.name)" >
                     <vue-bootstrap4-form-generator :model="model[element.name]" :schema="element" />
                 </template>
-                <!-- <template v-if="element.type === 'Array'">
-                    <div v-for="(value, key, index) in model" :key="index">
-                        <vue-bootstrap4-form-generator  :model="value" :schema="elements" />
+                <template v-if="element.type === 'Array'">
+                    <div v-for="(value, key, index) in model[element.name]" :key="index">
+                        <vue-bootstrap4-form-generator  :model.sync="value" :schema="element.schema" />
                     </div>
-                </template> -->
+                </template>
             </div>
         </template>
         <template v-else-if="schema.type === 'Array'">
             <div v-for="(value, key, index) in model" :key="index">
                 <vue-bootstrap4-form-generator  :model="value" :schema="schema.schema" />
             </div>
+        </template>
+        <template v-else-if="schema.type === 'input'">
+            <input-element :element="schema.element" :model.sync="model" @remove-key="removeKey"/>
         </template>
     </div>
 </template>
@@ -33,7 +36,7 @@ export default {
     name: "VueBootstrap4FormGenerator",
     props: {
         model: {
-            type: Object | Array,
+            type: Object | Array | String | Number | Boolean,
             default: function () {
                 return {}
             }
