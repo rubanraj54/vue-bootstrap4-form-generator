@@ -1,18 +1,19 @@
 <template>
-    <div class="form-group">
+    <div class="form-group" v-if="typeof model === 'object'">
         <label>{{element.label}}</label> <button type="button" class="btn btn-sm btn-primary" @click="$emit('remove-key',element.name)">x</button>
-        <template v-if="typeof model === 'object'">
-            <input :type="element.type" class="form-control" v-model='model[element.name]' :placeholder="element.placeholder">
-        </template>
-        <template v-else>
-            <input :type="element.type" class="form-control" v-model='model' :placeholder="element.placeholder">
-        </template>
+        <input :type="element.type" class="form-control" v-model='model[element.name]' :placeholder="element.placeholder">
+    </div>
+    <div class="form-group" v-else>
+        <!-- <label>{{element.label}}</label> <button type="button" class="btn btn-sm btn-primary" @click="$emit('remove-key',element.name)">x</button> -->
+        <input :type="element.type" class="form-control" v-bind:value='model' :placeholder="element.placeholder" @keyup.stop="updateValue($event)">
     </div>
 </template>
 
 <script>
+var _ = require('lodash');
+
 export default {
-    name: "Input",
+    name: "InputElement",
     props: {
         element: {
             type: Object,
@@ -21,7 +22,20 @@ export default {
         model: {
             type: Object| Array | String | Number | Boolean,
             required: false
-        }
+        },
+        parentElementName: {
+            type: String,
+            required: false
+        },
+        parentElementIndex: {
+            type: String | Number,
+            required: false
+        },
+    },
+    methods: {
+        updateValue: _.debounce(function(event) {
+            this.$emit('update-value',{name:this.parentElementName,index:this.parentElementIndex,value:event.target.value});
+        }, 60),
     }
 }
 </script>

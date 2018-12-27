@@ -9,8 +9,15 @@
                     <vue-bootstrap4-form-generator :model="model[element.name]" :schema="element" />
                 </template>
                 <template v-if="element.type === 'Array'">
-                    <div v-for="(value, key, index) in model[element.name]" :key="index">
-                        <vue-bootstrap4-form-generator  :model.sync="value" :schema="element.schema" />
+                    <div v-if="element.schema.type === 'Object'" v-for="(value, key, index) in model[element.name]" :key="index">
+                        <vue-bootstrap4-form-generator  :model="value" :schema="element.schema" />
+                    </div>
+                    <div v-if="element.schema.type === 'input'">
+                        <label>{{element.schema.element.label}}</label>
+                        <button type="button" class="btn btn-sm btn-primary" @click="clearAll(element.name)">x</button>
+                        <div v-for="(value, key, index) in model[element.name]" :key="index">
+                            <input-element :element="element.schema.element" :parentElementName="element.name" :parentElementIndex="key" :model="value" @remove-key="removeKey" @update-value="updateValue"/>
+                        </div>
                     </div>
                 </template>
             </div>
@@ -56,15 +63,17 @@ export default {
 
     },
     methods: {
-        updateModel(event,name) {
-            console.log(event);
-        },
         removeKey(key) {
             this.$delete(this.model, key)
-            // delete this.model[key];
+        },
+        clearAll(key) {
+            this.model[key] = [];
         },
         hasAttributeCheck(name) {
             return _.has(this.model,name);
+        },
+        updateValue(payload) {
+            this.model[payload.name][payload.index] = payload.value;
         }
     },
     components: {
