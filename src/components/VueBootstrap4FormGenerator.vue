@@ -1,48 +1,75 @@
 <template>
     <div>
-        <br>
-        <div class="card">
-            <div class="card-header">
+        <!-- <br> -->
+        <!-- <div class="card"> -->
+            <!-- <div class="card-header">
                 {{parentElementName}}
-            </div>
-            <div class="card-body">
+            </div> -->
+            <!-- <div class="card-body"> -->
                 <template v-if="schema.type === 'Object'">
                     <div v-for="(element, key, index) in schema.elements" :key="index">
                         <template v-if="element.element_type === 'input' && hasAttributeCheck(element.name)">
                             <input-element :element="element" :model="model" @remove-key="removeKey"/>
                         </template>
                         <template v-else-if="element.type === 'Object' && hasAttributeCheck(element.name)" >
-                            <vue-bootstrap4-form-generator :model="model[element.name]" :schema="element" :parentElementName="element.name"/>
-                        </template>
-                        <template v-else-if="element.type === 'Array'">
-                            <div v-if="element.schema.type === 'Object'" v-for="(value, key, index) in model[element.name]" :key="index">
-                                <vue-bootstrap4-form-generator  :model="value" :schema="element.schema" :parentElementName="element.name"/>
-                                <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add</button>
-                            </div>
-                            <div v-if="element.schema.type === 'input'">
-                                <label>{{element.schema.element.label}}</label>
-                                <button type="button" class="btn btn-sm btn-primary" @click="clearAll(element.name)">x</button>
-                                <div v-for="(value, key, index) in model[element.name]" :key="index">
-                                    <input-element :element="element.schema.element" :parentElementName="element.name" :parentElementIndex="key" :model="value" @remove-key="removeKey" @update-value="updateValue"/>
+                            <div class="card">
+                                <div class="card-header">
+                                    {{element.name}}
+                                </div>
+                                <div class="card-body">
+                                    <!-- <vue-bootstrap4-form-generator :model="model" :schema="schema">
+                                    </vue-bootstrap4-form-generator> -->
+                                    <vue-bootstrap4-form-generator :model="model[element.name]" :schema="element" :parentElementName="element.name"/>
                                 </div>
                             </div>
                         </template>
-                        <template v-else>
+                        <template v-else-if="element.type === 'Array'">
+                            <div class="card">
+                                <div class="card-header">
+                                    {{element.name}}
+                                </div>
+                                <div class="card-body">
+                                    <div v-if="element.schema.type === 'Object'" v-for="(value, key, index) in model[element.name]" :key="index">
+                                        <!-- <vue-bootstrap4-form-generator :model="model" :schema="schema">
+                                        </vue-bootstrap4-form-generator> -->
+                                        <vue-bootstrap4-form-generator  :model="value" :schema="element.schema" :parentElementName="element.name"/>
+                                        <hr>
+                                    </div>
+                                    <div v-if="element.schema.type === 'input'">
+                                        <!-- <label>{{element.schema.element.label}}</label> -->
+                                        <!-- <button type="button" class="btn btn-sm btn-primary" @click="clearAll(element.name)">x</button> -->
+                                        <div v-for="(value, key, index) in model[element.name]" :key="index">
+                                            <input-element :element="element.schema.element" :parentElementName="element.name" :parentElementIndex="key" :model="value" @remove-key="removeKey" @update-value="updateValue"/>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add</button>
+                                </div>
+                            </div>
+                        </template>
+                        <!-- <template v-else>
                             <div>
                             something wrong
                             </div>
-                        </template>
+                        </template> -->
                     </div>
                 </template>
                 <template v-else-if="schema.type === 'Array'">
-                    <div v-for="(value, key, index) in model" :key="index">
-                        <!-- <div class="card-header">
-                            {{schema.name}}
-                            <div class="float-right">
-                                <button type="button" class="btn btn-sm btn-warning" @click="removeModel(index)">Remove</button>
+                    <div class="card">
+                        <div class="card-header">
+                            {{element.name}}
+                        </div>
+                        <div class="card-body">
+                            <div v-for="(value, key, index) in model" :key="index">
+                                <!-- <div class="card-header">
+                                    {{schema.name}}
+                                    <div class="float-right">
+                                        <button type="button" class="btn btn-sm btn-warning" @click="removeModel(index)">Remove</button>
+                                    </div>
+                                </div> -->
+                                <vue-bootstrap4-form-generator :model="value" :schema="schema.schema"/>
                             </div>
-                        </div> -->
-                        <vue-bootstrap4-form-generator :model="value" :schema="schema.schema"/>
+                        </div>
                     </div>
                     <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add</button>
                 </template>
@@ -54,8 +81,8 @@
                         fkj
                     </div>
                 </template>
-            </div>
-        </div>
+            <!-- </div> -->
+        <!-- </div> -->
     </div>
 </template>
 
@@ -119,3 +146,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.card {
+    margin-top: 10px;
+}
+</style>

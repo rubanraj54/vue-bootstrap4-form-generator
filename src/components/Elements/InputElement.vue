@@ -6,13 +6,21 @@
             <!-- <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2"> -->
             <div class="input-group-append">
                 <!-- <button class="btn btn-outline-secondary" type="button">Button</button> -->
-                <button type="button" class="btn btn-sm btn-secondary" @click="$emit('remove-key',element.name)">Remove</button>
+                <button type="button" class="btn btn-sm btn-danger" @click="$emit('remove-key',element.name)">
+                    <i class="fas fa-times-circle"></i>
+                </button>
             </div>
         </div>
     </div>
     <div class="form-group" v-else>
-        <!-- <label>{{element.label}}</label> <button type="button" class="btn btn-sm btn-primary" @click="$emit('remove-key',element.name)">x</button> -->
-        <input :type="element.type" class="form-control" v-bind:value='model' :placeholder="element.placeholder" @keyup.stop="updateValue($event)">
+        <div class="input-group">
+            <input :type="element.type" class="form-control" v-bind:value='model' :placeholder="element.placeholder" @keyup.stop="updateValue($event)">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-sm btn-danger" @click="$emit('remove-key',element.name)">
+                    <i class="fas fa-times-circle"></i>
+                </button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -46,3 +54,4 @@ export default {
     }
 }
 </script>
+

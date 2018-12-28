@@ -1,8 +1,15 @@
 <template>
     <div id="app">
         <div class="container">
-            <vue-bootstrap4-form-generator :model="model" :schema="schema">
-            </vue-bootstrap4-form-generator>
+            <div class="card">
+                <div class="card-header">
+                    Root
+                </div>
+                <div class="card-body">
+                    <vue-bootstrap4-form-generator :model="model" :schema="schema">
+                    </vue-bootstrap4-form-generator>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -207,6 +214,8 @@
     }
 </script>
 
-<style>
-
+<style scoped>
+.card {
+    margin-top: 10px;
+}
 </style>
