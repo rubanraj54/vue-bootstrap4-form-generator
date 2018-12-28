@@ -1,0 +1,673 @@
+{
+    "url": "/registry",
+    "entries": [{
+            "id": "05bf9f68-96ac-40fb-be1c-35ff375d5583",
+            "url": "/registry/05bf9f68-96ac-40fb-be1c-35ff375d5583",
+            "data": "/data/05bf9f68-96ac-40fb-be1c-35ff375d5583",
+            "resource": "12/0/49/4/power",
+            "meta": {
+                "name": "Philip's computer"
+            },
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/ZGW/linksmart-philip/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "1w",
+            "aggregation": [{
+                "id": "4efaf6fb",
+                "interval": "1m",
+                "data": "/aggr/4efaf6fb/05bf9f68-96ac-40fb-be1c-35ff375d5583",
+                "aggregates": [
+                    "mean"
+                ],
+                "retention": ""
+            }],
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "0ac16cec-197f-40f5-b224-90598f03e060",
+            "url": "/registry/0ac16cec-197f-40f5-b224-90598f03e060",
+            "data": "/data/0ac16cec-197f-40f5-b224-90598f03e060",
+            "resource": "linksmart-fig/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-fig/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "0b4cb533-25de-4f5b-948d-f0b8ab6efcbb",
+            "url": "/registry/0b4cb533-25de-4f5b-948d-f0b8ab6efcbb",
+            "data": "/data/0b4cb533-25de-4f5b-948d-f0b8ab6efcbb",
+            "resource": "4/0/49/3/luminiscence",
+            "meta": {
+                "name": "Philips's luminiscence"
+            },
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/ZGW/linksmart-philip/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "0eeee1d8-2104-4eab-8605-ab55bfb63ecb",
+            "url": "/registry/0eeee1d8-2104-4eab-8605-ab55bfb63ecb",
+            "data": "/data/0eeee1d8-2104-4eab-8605-ab55bfb63ecb",
+            "resource": "9/0/49/1/temperatur",
+            "meta": {
+                "name": "Philips's heater"
+            },
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/ZGW/linksmart-philip/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "104cf0ce-b001-4d78-ae1a-bfd2df05f77f",
+            "url": "/registry/104cf0ce-b001-4d78-ae1a-bfd2df05f77f",
+            "data": "/data/104cf0ce-b001-4d78-ae1a-bfd2df05f77f",
+            "resource": "linksmart-cassis/Humidity",
+            "meta": {
+                "name": "Philip's LS humidity"
+            },
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/DGW/linksmart-cassis/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "245be560-422e-473a-bd2d-226a58350e76",
+            "url": "/registry/245be560-422e-473a-bd2d-226a58350e76",
+            "data": "/data/245be560-422e-473a-bd2d-226a58350e76",
+            "resource": "linksmart-blue/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-blue/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "260f5609-9c31-40b0-a851-6b41a5c06014",
+            "url": "/registry/260f5609-9c31-40b0-a851-6b41a5c06014",
+            "data": "/data/260f5609-9c31-40b0-a851-6b41a5c06014",
+            "resource": "linksmart-red/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-red/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "28f19447-5311-4bad-b1ea-dee825889cf7",
+            "url": "/registry/28f19447-5311-4bad-b1ea-dee825889cf7",
+            "data": "/data/28f19447-5311-4bad-b1ea-dee825889cf7",
+            "resource": "linksmart-banana/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-banana/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "1h",
+            "aggregation": [{
+                "id": "b4464e8d",
+                "interval": "30m",
+                "data": "/aggr/b4464e8d/28f19447-5311-4bad-b1ea-dee825889cf7",
+                "aggregates": [
+                    "max",
+                    "mean"
+                ],
+                "retention": "1w"
+            }],
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "305aedc2-3e13-4903-af6b-96c0b95d7ecf",
+            "url": "/registry/305aedc2-3e13-4903-af6b-96c0b95d7ecf",
+            "data": "/data/305aedc2-3e13-4903-af6b-96c0b95d7ecf",
+            "resource": "linksmart-apple/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-apple/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "4a38a266-1279-4f4d-9972-62ec62681913",
+            "url": "/registry/4a38a266-1279-4f4d-9972-62ec62681913",
+            "data": "/data/4a38a266-1279-4f4d-9972-62ec62681913",
+            "resource": "2/0/49/4/power",
+            "meta": {
+                "name": "Philip's fan"
+            },
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/ZGW/linksmart-philip/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "1w",
+            "aggregation": [{
+                "id": "4efaf6fb",
+                "interval": "1m",
+                "data": "/aggr/4efaf6fb/4a38a266-1279-4f4d-9972-62ec62681913",
+                "aggregates": [
+                    "mean"
+                ],
+                "retention": ""
+            }],
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "5e67ceb8-704a-417f-a3e6-8e696e428609",
+            "url": "/registry/5e67ceb8-704a-417f-a3e6-8e696e428609",
+            "data": "/data/5e67ceb8-704a-417f-a3e6-8e696e428609",
+            "resource": "linksmart-cassis/Temperature",
+            "meta": {
+                "name": "Philip's LS tempterature"
+            },
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/DGW/linksmart-cassis/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "6e8a054f-9352-42fd-8865-5f7bb09b20d8",
+            "url": "/registry/6e8a054f-9352-42fd-8865-5f7bb09b20d8",
+            "data": "/data/6e8a054f-9352-42fd-8865-5f7bb09b20d8",
+            "resource": "sauron/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/sauron/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "740b81bb-a53d-4ce2-a11e-ceb2b37f593d",
+            "url": "/registry/740b81bb-a53d-4ce2-a11e-ceb2b37f593d",
+            "data": "/data/740b81bb-a53d-4ce2-a11e-ceb2b37f593d",
+            "resource": "linksmart-banana/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-banana/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "1h",
+            "aggregation": [{
+                "id": "b4464e8d",
+                "interval": "30m",
+                "data": "/aggr/b4464e8d/740b81bb-a53d-4ce2-a11e-ceb2b37f593d",
+                "aggregates": [
+                    "max",
+                    "mean"
+                ],
+                "retention": "1w"
+            }],
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "8c763ab2-11df-48bb-96dd-fba502e5615f",
+            "url": "/registry/8c763ab2-11df-48bb-96dd-fba502e5615f",
+            "data": "/data/8c763ab2-11df-48bb-96dd-fba502e5615f",
+            "resource": "linksmart-apple/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-apple/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "9b1921c1-b20f-496a-a127-b5a01f0a91a5",
+            "url": "/registry/9b1921c1-b20f-496a-a127-b5a01f0a91a5",
+            "data": "/data/9b1921c1-b20f-496a-a127-b5a01f0a91a5",
+            "resource": "13/0/49/4/power",
+            "meta": {
+                "name": "Philip's laptop"
+            },
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/ZGW/linksmart-philip/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "1w",
+            "aggregation": [{
+                "id": "4efaf6fb",
+                "interval": "1m",
+                "data": "/aggr/4efaf6fb/9b1921c1-b20f-496a-a127-b5a01f0a91a5",
+                "aggregates": [
+                    "mean"
+                ],
+                "retention": ""
+            }],
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "9b7c90e7-7ffd-496b-822b-d43542320cfe",
+            "url": "/registry/9b7c90e7-7ffd-496b-822b-d43542320cfe",
+            "data": "/data/9b7c90e7-7ffd-496b-822b-d43542320cfe",
+            "resource": "iot-linksmart-white/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/iot-linksmart-white/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "1h",
+            "aggregation": [{
+                "id": "78964e21",
+                "interval": "5m",
+                "data": "/aggr/78964e21/9b7c90e7-7ffd-496b-822b-d43542320cfe",
+                "aggregates": [
+                    "max",
+                    "mean"
+                ],
+                "retention": "1w"
+            }],
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "a3911976-0cc7-41be-a061-7c44f7eae6e5",
+            "url": "/registry/a3911976-0cc7-41be-a061-7c44f7eae6e5",
+            "data": "/data/a3911976-0cc7-41be-a061-7c44f7eae6e5",
+            "resource": "linksmart-melon/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-melon/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "a454c4c9-ee9a-4e06-ac78-a0829778f179",
+            "url": "/registry/a454c4c9-ee9a-4e06-ac78-a0829778f179",
+            "data": "/data/a454c4c9-ee9a-4e06-ac78-a0829778f179",
+            "resource": "4/0/49/1/temperatur",
+            "meta": {
+                "name": "Philips's ambi temperatur"
+            },
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/ZGW/linksmart-philip/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "a5dde180-ae1e-49df-b5e7-5d3d6b9b9253",
+            "url": "/registry/a5dde180-ae1e-49df-b5e7-5d3d6b9b9253",
+            "data": "/data/a5dde180-ae1e-49df-b5e7-5d3d6b9b9253",
+            "resource": "linksmart-cherry/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-cherry/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "abc7d9cd-b09a-43e8-8be0-43114b508bc6",
+            "url": "/registry/abc7d9cd-b09a-43e8-8be0-43114b508bc6",
+            "data": "/data/abc7d9cd-b09a-43e8-8be0-43114b508bc6",
+            "resource": "iot-linksmart-white/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/iot-linksmart-white/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "1h",
+            "aggregation": [{
+                "id": "78964e21",
+                "interval": "5m",
+                "data": "/aggr/78964e21/abc7d9cd-b09a-43e8-8be0-43114b508bc6",
+                "aggregates": [
+                    "max",
+                    "mean"
+                ],
+                "retention": "1w"
+            }],
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "ac257626-8a19-4e88-a819-73ced71fc385",
+            "url": "/registry/ac257626-8a19-4e88-a819-73ced71fc385",
+            "data": "/data/ac257626-8a19-4e88-a819-73ced71fc385",
+            "resource": "linksmart-blue/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-blue/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "b25a69d8-6fb1-4b35-8a66-1c2bd5075c3b",
+            "url": "/registry/b25a69d8-6fb1-4b35-8a66-1c2bd5075c3b",
+            "data": "/data/b25a69d8-6fb1-4b35-8a66-1c2bd5075c3b",
+            "resource": "linksmart-pink/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-pink/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "b34e4668-9e96-4285-93f8-f9467df9d32a",
+            "url": "/registry/b34e4668-9e96-4285-93f8-f9467df9d32a",
+            "data": "/data/b34e4668-9e96-4285-93f8-f9467df9d32a",
+            "resource": "linksmart-fig/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-fig/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "b3575822-775e-4289-8456-4e75179657de",
+            "url": "/registry/b3575822-775e-4289-8456-4e75179657de",
+            "data": "/data/b3575822-775e-4289-8456-4e75179657de",
+            "resource": "8/0/49/1/temperatur",
+            "meta": {
+                "name": "Philips's heatcontroller"
+            },
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/ZGW/linksmart-philip/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "bd255c31-22c1-4a88-aa47-c2df4b033ea3",
+            "url": "/registry/bd255c31-22c1-4a88-aa47-c2df4b033ea3",
+            "data": "/data/bd255c31-22c1-4a88-aa47-c2df4b033ea3",
+            "resource": "linksmart-pink/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-pink/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "bd86b4f3-bb72-4dea-b67c-cc6106e0b6af",
+            "url": "/registry/bd86b4f3-bb72-4dea-b67c-cc6106e0b6af",
+            "data": "/data/bd86b4f3-bb72-4dea-b67c-cc6106e0b6af",
+            "resource": "14/0/49/4/power",
+            "meta": {
+                "name": "Farshid's fan"
+            },
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/ZGW/linksmart-philip/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "1w",
+            "aggregation": [{
+                "id": "4efaf6fb",
+                "interval": "1m",
+                "data": "/aggr/4efaf6fb/bd86b4f3-bb72-4dea-b67c-cc6106e0b6af",
+                "aggregates": [
+                    "mean"
+                ],
+                "retention": ""
+            }],
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "e16bcbc5-2b9a-41e7-b3a7-1a0cf4b73fb1",
+            "url": "/registry/e16bcbc5-2b9a-41e7-b3a7-1a0cf4b73fb1",
+            "data": "/data/e16bcbc5-2b9a-41e7-b3a7-1a0cf4b73fb1",
+            "resource": "sauron/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/sauron/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "e32e2d6f-268c-4b7d-8ed9-63ab9cb538a4",
+            "url": "/registry/e32e2d6f-268c-4b7d-8ed9-63ab9cb538a4",
+            "data": "/data/e32e2d6f-268c-4b7d-8ed9-63ab9cb538a4",
+            "resource": "linksmart-cherry/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-cherry/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "e53874d8-87f6-4638-9f85-5d77461c4633",
+            "url": "/registry/e53874d8-87f6-4638-9f85-5d77461c4633",
+            "data": "/data/e53874d8-87f6-4638-9f85-5d77461c4633",
+            "resource": "linksmart-black/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-black/senml",
+                    "qos": 1,
+                    "username": "*****",
+                    "password": "*****"
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "e73c1cec-e844-4b78-b868-54f2fac6a048",
+            "url": "/registry/e73c1cec-e844-4b78-b868-54f2fac6a048",
+            "data": "/data/e73c1cec-e844-4b78-b868-54f2fac6a048",
+            "resource": "linksmart-melon/Temperature",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-melon/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "f9a59366-5544-4452-bf02-b7741aa43932",
+            "url": "/registry/f9a59366-5544-4452-bf02-b7741aa43932",
+            "data": "/data/f9a59366-5544-4452-bf02-b7741aa43932",
+            "resource": "linksmart-red/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-red/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        },
+        {
+            "id": "fd0f3dbe-dcbc-4b89-b0ac-49288739a133",
+            "url": "/registry/fd0f3dbe-dcbc-4b89-b0ac-49288739a133",
+            "data": "/data/fd0f3dbe-dcbc-4b89-b0ac-49288739a133",
+            "resource": "linksmart-black/Humidity",
+            "meta": null,
+            "connector": {
+                "mqtt": {
+                    "url": "tcp://linksmart-dev.fit.fraunhofer.de:1883",
+                    "topic": "LS/v2/DGW/linksmart-black/senml",
+                    "qos": 1
+                }
+            },
+            "retention": "",
+            "aggregation": null,
+            "type": "float",
+            "format": "application/senml+json"
+        }
+    ],
+    "page": 1,
+    "per_page": 100,
+    "total": 32
+}
