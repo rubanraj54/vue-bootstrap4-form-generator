@@ -12,13 +12,13 @@
                             {{element.name}}
                         </div>
                         <div class="card-body">
-                            <vue-bootstrap4-form-generator :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" />
+                            <vue-bootstrap4-form-generator :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex"/>
                         </div>
                     </div>
                 </template>
 
                 <template v-else-if="element.type === 'Array'">
-                    <vue-bootstrap4-form-generator :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" />
+                    <vue-bootstrap4-form-generator :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" />
                 </template>
             </div>
         </template>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="card-body">
                     <div v-for="(value, key, index) in model" :key="index">
-                        <vue-bootstrap4-form-generator :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" />
+                        <vue-bootstrap4-form-generator :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" />
                         <hr>
                     </div>
                     <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
@@ -39,7 +39,7 @@
         </template>
 
         <template v-else-if="schema.type === 'input'">
-            <input-element :element="schema.element" :model.sync="model" :parentElementName="parentElementName" :parentElementIndex="parentElementIndex" @remove-key="removeKey" @update-value="updateValue" />
+            <input-element :element="schema.element" :model.sync="model" :parentElementName="parentElementName" :parentElementIndex="parentElementIndex" @remove-key="removeKey" @update-value="updateValue" @remove-index="removeIndex"/>
         </template>
 
         <template v-else>
@@ -116,13 +116,23 @@ export default {
 
             }
         },
+        removeIndex(payload) {
+
+            if ((this.parentType == "Array" && this.schema.type == "input")) {
+                this.$emit('remove-index', payload);
+            } else if (this.parentType == "Object" && this.schema.type == "Array") {
+                this.$emit('remove-index', payload);
+            } else {
+                this.model[payload.name].splice([payload.index],1);
+            }
+        },
         addModel() {
             let model = _.cloneDeep(this.model[0]);
             this.model.push(model);
         },
-        removeModel(index) {
-            this.model.splice(index, 1);
-        },
+        // removeModel(index) {
+        //     this.model.splice(index, 1);
+        // },
     },
     components: {
         VueBootstrap4FormGenerator,

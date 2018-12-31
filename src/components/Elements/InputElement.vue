@@ -16,7 +16,7 @@
         <div class="input-group">
             <input :type="element.type" class="form-control" v-bind:value='model' :placeholder="element.placeholder" @keyup.stop="updateValue($event)">
             <div class="input-group-append">
-                <button type="button" class="btn btn-sm btn-danger" @click="$emit('remove-key',element.name)">
+                <button type="button" class="btn btn-sm btn-danger" @click="removeIndex">
                     <i class="fas fa-times-circle"></i>
                 </button>
             </div>
@@ -51,6 +51,9 @@ export default {
         updateValue: _.debounce(function(event) {
             this.$emit('update-value',{name:this.parentElementName,index:this.parentElementIndex,value:event.target.value});
         }, 60),
+        removeIndex() {
+            this.$emit('remove-index',{name:this.parentElementName,index:this.parentElementIndex});
+        }
     }
 }
 </script>
