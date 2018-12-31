@@ -13,17 +13,17 @@ Vue.config.productionTip = false
 //   components: { App },
 //   template: '<App/>'
 // })
-// new Vue({
-//     el: '#app',
-//     components: {
-//         AppTest
-//     },
-//     template: '<AppTest/>'
-// })
 new Vue({
     el: '#app',
     components: {
-        AppRegistry
+        AppTest
     },
-    template: '<AppRegistry/>'
+    template: '<AppTest/>'
 })
+// new Vue({
+//     el: '#app',
+//     components: {
+//         AppRegistry
+//     },
+//     template: '<AppRegistry/>'
+// })

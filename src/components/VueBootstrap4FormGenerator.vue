@@ -12,13 +12,13 @@
                             {{element.name}}
                         </div>
                         <div class="card-body">
-                            <vue-bootstrap4-form-generator :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex"/>
+                            <vue-bootstrap4-form-generator :defaults="defaults[element.name]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex"/>
                         </div>
                     </div>
                 </template>
 
                 <template v-else-if="element.type === 'Array'">
-                    <vue-bootstrap4-form-generator :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" />
+                    <vue-bootstrap4-form-generator :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" />
                 </template>
             </div>
         </template>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="card-body">
                     <div v-for="(value, key, index) in model" :key="index">
-                        <vue-bootstrap4-form-generator :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" />
+                        <vue-bootstrap4-form-generator :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" />
                         <hr>
                     </div>
                     <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
@@ -71,7 +71,7 @@ export default {
             }
         },
         defaults: {
-            type: Object,
+            type: Object | Array | String | Number | Boolean,
             default: function () {
                 return {}
             }
@@ -127,7 +127,7 @@ export default {
             }
         },
         addModel() {
-            let model = _.cloneDeep(this.model[0]);
+            let model = _.cloneDeep(this.defaults);
             this.model.push(model);
         },
         // removeModel(index) {

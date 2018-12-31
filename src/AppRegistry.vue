@@ -84,15 +84,6 @@
                             "default mean"
                         ],
                         "retention": "default retention"
-                    },
-                    {
-                        "id": "default 4efaf6fb",
-                        "interval": "default  1m",
-                        "data": "default  /aggr/4efaf6fb/05bf9f68-96ac-40fb-be1c-35ff375d5583",
-                        "aggregates": [
-                            "default mean"
-                        ],
-                        "retention": "default "
                     }],
                     "type": "default  float",
                     "format": "default application/senml+json"
