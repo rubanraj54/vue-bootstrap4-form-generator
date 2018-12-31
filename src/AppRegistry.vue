@@ -43,7 +43,8 @@
                         "interval": "1m",
                         "data": "/aggr/4efaf6fb/05bf9f68-96ac-40fb-be1c-35ff375d5583",
                         "aggregates": [
-                            "mean"
+                            "mean",
+                            "mean 2"
                         ],
                         "retention": ""
                     },
