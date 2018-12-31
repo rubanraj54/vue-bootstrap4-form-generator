@@ -38,12 +38,15 @@
                                     <div v-if="element.schema.type === 'input'">
                                         <!-- <label>{{element.schema.element.label}}</label> -->
                                         <!-- <button type="button" class="btn btn-sm btn-primary" @click="clearAll(element.name)">x</button> -->
-                                        <div v-for="(value, key, index) in model[element.name]" :key="index">
-                                            <input-element :element="element.schema.element" :parentElementName="element.name" :parentElementIndex="key" :model="value" @remove-key="removeKey" @update-value="updateValue"/>
-                                            <hr>
-                                        </div>
+                                            <vue-bootstrap4-form-generator  :model="value" :schema="element.schema" :parentElementName="element.name" :parentElementIndex="key" @remove-key="removeKey"/>
+                                        <!-- <div v-for="(value, key, index) in model[element.name]" :key="index">
+                                            <vue-bootstrap4-form-generator  :model="value" :schema="element.schema" :parentElementName="element.name" :parentElementIndex="key" @remove-key="removeKey"/> -->
+                                            <!-- <input-element :element="element.schema.element" :parentElementName="element.name" :parentElementIndex="key" :model="value" @remove-key="removeKey" @update-value="updateValue"/> -->
+                                            <!-- <hr>
+                                        </div> -->
                                     </div>
-                                    <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add</button>
+                                    <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
+    <!-- <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add</button> -->
                                 </div>
                             </div>
                         </template>
@@ -74,7 +77,8 @@
                     <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add</button>
                 </template>
                 <template v-else-if="schema.type === 'input'">
-                    <input-element :element="schema.element" :model.sync="model" @remove-key="removeKey"/>
+                    <input-element :element="schema.element" :model.sync="model" :parentElementName="parentElementName" :parentElementIndex="parentElementIndex" @remove-key="removeKey" @update-value="updateValue"/>
+            <!-- <input-element :element="element.schema.element" :parentElementName="element.name" :parentElementIndex="key" :model="value" @remove-key="removeKey" @update-value="updateValue"/> -->
                 </template>
                 <template v-else>
                     <div>
@@ -107,9 +111,19 @@ export default {
                 return {}
             }
         },
+        defaults: {
+            type: Object,
+            default: function () {
+                return {}
+            }
+        },
         parentElementName: {
             type: String,
             default: "Root"
+        },
+        parentElementIndex: {
+            type: String | Number,
+            required: false
         },
     },
     data: function() {
@@ -130,6 +144,9 @@ export default {
             return _.has(this.model,name);
         },
         updateValue(payload) {
+            if (typeof this.model != "Array") {
+
+            }
             this.model[payload.name][payload.index] = payload.value;
         },
         addModel() {

@@ -6,7 +6,7 @@
                     Root
                 </div>
                 <div class="card-body">
-                    <vue-bootstrap4-form-generator :model="model" :schema="schema">
+                    <vue-bootstrap4-form-generator :model="model" :schema="schema" :defaults="defaults">
                     </vue-bootstrap4-form-generator>
                 </div>
             </div>
@@ -59,6 +59,44 @@
                     "type": "float",
                     "format": "application/senml+json"
                 },
+                defaults: {
+                        "id": "default id",
+                        "url": "default url",
+                        "data" : "default data",
+                        "resource":"default resource",
+                        "meta": {
+                        "name": "default Philip's computer"
+                    },
+                    "connector": {
+                        "mqtt": {
+                            "url": "default mqtt url",
+                            "topic": "default mqtt topic",
+                            "qos": 3
+                        }
+                    },
+                    "retention": "default retention 1w",
+                    "aggregation": [{
+                        "id": "default id",
+                        "interval": "default interval",
+                        "data": "default data",
+                        "aggregates": [
+                            "default mean"
+                        ],
+                        "retention": "default retention"
+                    },
+                    {
+                        "id": "default 4efaf6fb",
+                        "interval": "default  1m",
+                        "data": "default  /aggr/4efaf6fb/05bf9f68-96ac-40fb-be1c-35ff375d5583",
+                        "aggregates": [
+                            "default mean"
+                        ],
+                        "retention": "default "
+                    }],
+                    "type": "default  float",
+                    "format": "default application/senml+json"
+                },
+
                 schema: {
                     type: "Object",
                     elements: [
