@@ -12,13 +12,13 @@
                             {{element.name}}
                         </div>
                         <div class="card-body">
-                            <vue-bootstrap4-form-generator :defaults="defaults[element.name]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex"/>
+                            <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex"/>
                         </div>
                     </div>
                 </template>
 
                 <template v-else-if="element.type === 'Array'">
-                    <vue-bootstrap4-form-generator :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" />
+                    <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" />
                 </template>
             </div>
         </template>
@@ -29,8 +29,10 @@
                     {{parentElementName}}
                 </div>
                 <div class="card-body">
+                    <!-- {{defaults[0]}} -->
                     <div v-for="(value, key, index) in model" :key="index">
-                        <vue-bootstrap4-form-generator :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" />
+                        <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" />
+                        <button type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
                         <hr>
                     </div>
                     <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
@@ -88,9 +90,15 @@ export default {
             type: String | Number,
             required: false
         },
+        isRoot: {
+            type: Boolean,
+            default: true
+        },
     },
     data: function () {
-        return {}
+        return {
+            is_root: false
+        }
     },
     mounted() {
 
@@ -127,12 +135,17 @@ export default {
             }
         },
         addModel() {
-            let model = _.cloneDeep(this.defaults);
+            let model = null;
+            if (this.isRoot == true && this.schema.type == "Array") {
+                model = _.cloneDeep(this.defaults[0]);
+            } else {
+                model = _.cloneDeep(this.defaults);
+            }
             this.model.push(model);
         },
-        // removeModel(index) {
-        //     this.model.splice(index, 1);
-        // },
+        removeModel(index) {
+            this.model.splice(index, 1);
+        },
     },
     components: {
         VueBootstrap4FormGenerator,
