@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="container">
-            <vue-bootstrap4-form-generator :model="model" :schema="schema">
+            <vue-bootstrap4-form-generator :defaults="defaults" :model="model" :schema="schema">
             </vue-bootstrap4-form-generator>
         </div>
     </div>
@@ -19,6 +19,13 @@
                     "vb": 23,
                     "vs": "dssdf"
                 }],
+                defaults: [
+                    {
+                        "bn": "default name",
+                        "vb": 0,
+                        "vs": "default string"
+                    }
+                ],
                 schema: {
                     // name: "users",
                     type: "Array",
