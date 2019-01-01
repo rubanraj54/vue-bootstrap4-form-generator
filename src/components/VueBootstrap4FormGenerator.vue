@@ -32,7 +32,7 @@
                     <!-- {{defaults[0]}} -->
                     <div v-for="(value, key, index) in model" :key="index">
                         <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" />
-                        <button type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
+                        <button v-if="schema.schema.type !== 'input'" type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
                         <hr>
                     </div>
                     <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import VueBootstrap4FormGenerator from './VueBootstrap4FormGenerator'
-import InputElement from './Elements/InputElement'
+import VueBootstrap4FormGenerator from './VueBootstrap4FormGenerator.vue'
+import InputElement from './Elements/InputElement.vue'
 var _ = require('lodash');
 
 export default {
