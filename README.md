@@ -2,7 +2,7 @@
 
 > A full fledged form generator based on simplified json schema and model
 
-Under developement. Docs and demo coming soone
+Under developement. Docs and demo coming soon
 
 ## Build Setup
 
