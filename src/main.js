@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import AppTest from './AppTest'
 import AppRegistry from './AppRegistry'
+import AppOriginal from './AppOriginal'
 
 Vue.config.productionTip = false
 
@@ -13,17 +14,26 @@ Vue.config.productionTip = false
 //   components: { App },
 //   template: '<App/>'
 // })
-// new Vue({
-//     el: '#app',
-//     components: {
-//         AppTest
-//     },
-//     template: '<AppTest/>'
-// })
 new Vue({
     el: '#app',
     components: {
-        AppRegistry
+        AppTest
     },
-    template: '<AppRegistry/>'
+    template: '<AppTest/>'
 })
+
+// new Vue({
+//     el: '#app',
+//     components: {
+//         AppRegistry
+//     },
+//     template: '<AppRegistry/>'
+// })
+
+// new Vue({
+//     el: '#app',
+//     components: {
+//         AppOriginal
+//     },
+//     template: '<AppOriginal/>'
+// })
