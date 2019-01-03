@@ -196,18 +196,25 @@ export default {
             this.model.splice(index, 1);
         },
         addNewProperty() {
-            if (this.newkey === "") {
-                this.key_error = "key is mandatory";
-                return;
-            }
             let key = _.clone(this.newkey);
             let value = _.clone(this.newvalue);
             let type = "text";
+
+            if (key === "") {
+                this.key_error = "key is mandatory";
+                return;
+            }
+
+            if (_.has(this.model,key)) {
+                this.key_error = "Duplicate key";
+                return;
+            }
 
             if (this.selected_type === "number") {
                 value = Number(value);
                 type = "number";
             }
+
             if (this.selected_type === "boolean") {
                 type = "checkbox";
             }
