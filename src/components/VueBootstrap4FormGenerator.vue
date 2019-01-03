@@ -21,6 +21,49 @@
                     <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" />
                 </template>
             </div>
+            <a v-if="show_add_new_property" href="" @click.prevent="show_add_new_property=false">+ Add new property</a>
+            <div v-if="!show_add_new_property">
+                <hr>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                        {{selected_type}}
+                                    </button>
+                            <div class="dropdown-menu" aria-labelledby="triggerId">
+                                <button class="dropdown-item" :class="{'active':selected_type == 'string'}" href="" @click.prevent = "selected_type = 'string'">string</button>
+                                <button class="dropdown-item" :class="{'active':selected_type == 'number'}" href="" @click.prevent = "selected_type = 'number'">number</button>
+                                <button class="dropdown-item" :class="{'active':selected_type == 'boolean'}" href="" @click.prevent = "selected_type = 'boolean'">boolean</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                        <input type="text" class="form-control" name="key" v-model="newkey" placeholder="key">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group" v-if="selected_type == 'string'">
+                            <input type="text" class="form-control" name="value" v-model="newvalue" placeholder="value">
+                        </div>
+                        <div class="form-group" v-if="selected_type == 'number'">
+                            <input type="number" class="form-control" name="value" v-model.number="newvalue" placeholder="value">
+                        </div>
+                        <div class="form-check" v-if="selected_type == 'boolean'">
+                            <label></label>
+                            <input type="checkbox" class="form-check-input" name="" id="" v-model="newvalue">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary btn-sm" @click="addNewProperty">Add new property</button>
+                        <button type="button" class="btn btn-danger btn-sm" @click="show_add_new_property = true">Close</button>
+                    </div>
+                </div>
+                <hr>
+            </div>
         </template>
 
         <template v-else-if="schema.type === 'Array'">
@@ -97,7 +140,11 @@ export default {
     },
     data: function () {
         return {
-            is_root: false
+            is_root: false,
+            show_add_new_property: true,
+            selected_type: "string",
+            newkey: "",
+            newvalue:""
         }
     },
     mounted() {
@@ -146,6 +193,41 @@ export default {
         removeModel(index) {
             this.model.splice(index, 1);
         },
+        addNewProperty() {
+            let key = _.clone(this.newkey);
+            let value = _.clone(this.newvalue);
+            let type = "text";
+
+            if (this.selected_type === "number") {
+                value = Number(value);
+                type = "number";
+            }
+            if (this.selected_type === "boolean") {
+                type = "checkbox";
+            }
+
+            let element = {
+                element_type: "input",
+                label: key,
+                name: key,
+                placeholder: "Enter " + key,
+                type: type
+            };
+
+            this.$set(this.model, key, value);
+            this.schema.elements.push(element);
+        }
+    },
+    watch: {
+        selected_type(newVal,oldVal) {
+            if (newVal == "boolean") {
+                this.newvalue = false;
+            } else if (newVal == "number") {
+                this.newvalue = 0;
+            } else {
+                this.newvalue = "";
+            }
+        }
     },
     components: {
         VueBootstrap4FormGenerator,
