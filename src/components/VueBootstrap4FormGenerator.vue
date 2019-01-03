@@ -40,7 +40,8 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                        <input type="text" class="form-control" name="key" v-model="newkey" placeholder="key">
+                            <input type="text" class="form-control" name="key" v-model="newkey" placeholder="key">
+                            <small v-if="key_error !== ''" class="form-text text-danger">{{key_error}}</small>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -144,7 +145,8 @@ export default {
             show_add_new_property: true,
             selected_type: "string",
             newkey: "",
-            newvalue:""
+            newvalue:"",
+            key_error:"",
         }
     },
     mounted() {
@@ -194,6 +196,10 @@ export default {
             this.model.splice(index, 1);
         },
         addNewProperty() {
+            if (this.newkey === "") {
+                this.key_error = "key is mandatory";
+                return;
+            }
             let key = _.clone(this.newkey);
             let value = _.clone(this.newvalue);
             let type = "text";
@@ -227,6 +233,9 @@ export default {
             } else {
                 this.newvalue = "";
             }
+        },
+        newkey(newVal,oldVal) {
+            this.key_error = "";
         }
     },
     components: {
