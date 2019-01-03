@@ -9,16 +9,23 @@
                 <template v-else-if="element.type === 'Object' && hasAttributeCheck(element.name)">
                     <div class="card">
                         <div class="card-header">
-                            {{element.name}}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{element.name}}
+                                </div>
+                                <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-sm btn-warning" @click="$emit('remove-key',element.name)">Remove {{element.name}}</button>
+                                </div>
+                            </div>                            
                         </div>
                         <div class="card-body">
-                            <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex"/>
+                            <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey"/>
                         </div>
                     </div>
                 </template>
 
                 <template v-else-if="element.type === 'Array'">
-                    <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" />
+                    <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey"/>
                 </template>
             </div>
             <a v-if="show_add_new_property" href="" @click.prevent="show_add_new_property=false">+ Add new property</a>
@@ -76,13 +83,13 @@
                         </div>
                         <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Basic example">
                            <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
+                           <button type="button" class="btn btn-sm btn-warning" @click="$emit('remove-key',parentElementName)">Remove {{parentElementName}}</button>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <!-- {{defaults[0]}} -->
                     <div v-for="(value, key, index) in model" :key="index">
-                        <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" />
+                        <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey"/>
                         <button v-if="schema.schema.type !== 'input'" type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
                         <hr>
                     </div>
@@ -160,6 +167,8 @@ export default {
     },
     methods: {
         removeKey(key) {
+            console.log(key);
+            console.log(this.model);
             this.$delete(this.model, key)
         },
         clearAll(key) {
