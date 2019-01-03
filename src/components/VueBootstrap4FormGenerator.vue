@@ -70,7 +70,14 @@
         <template v-else-if="schema.type === 'Array'">
             <div class="card">
                 <div class="card-header">
-                    {{parentElementName}}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{parentElementName}}
+                        </div>
+                        <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Basic example">
+                           <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <!-- {{defaults[0]}} -->
@@ -79,7 +86,6 @@
                         <button v-if="schema.schema.type !== 'input'" type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
                         <hr>
                     </div>
-                    <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
                 </div>
             </div>
         </template>
