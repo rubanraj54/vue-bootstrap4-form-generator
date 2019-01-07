@@ -14,9 +14,10 @@
                                     {{element.name}}
                                 </div>
                                 <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-sm btn-warning" @click="$emit('remove-key',element.name)">Remove {{element.name}}</button>
+                                <button type="button" class="btn btn-sm btn-warning" @click="removeKey(element.name)">Remove {{element.name}}</button>
+                                <!-- <button type="button" class="btn btn-sm btn-warning" @click="$emit('remove-key',element.name)">Remove {{element.name}}</button> -->
                                 </div>
-                            </div>                            
+                            </div>
                         </div>
                         <div class="card-body">
                             <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey"/>
@@ -25,7 +26,7 @@
                 </template>
 
                 <template v-else-if="element.type === 'Array'">
-                    <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey"/>
+                    <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray"/>
                 </template>
             </div>
             <a v-if="show_add_new_property" href="" @click.prevent="show_add_new_property=false">+ Add new property</a>
@@ -205,7 +206,23 @@ export default {
             } else {
                 model = _.cloneDeep(this.defaults);
             }
-            this.model.push(model);
+
+            if (!_.isEmpty(this.model)) {
+                this.model.push(model);
+            } else {
+                this.$emit("add-model-to-array",{"key":this.parentElementName,"defaults":_.cloneDeep(this.defaults)});
+            }
+        },
+        addModelToArray(payload) {
+            let key = payload.key;
+            let value = payload.defaults;
+
+            if(!_.has(this.model,key)) {
+                this.$set(this.model, key, [value]);
+            } else {
+                this.model[key].push(value);
+                console.log("addModelToArray: key already present in the model")
+            }
         },
         removeModel(index) {
             this.model.splice(index, 1);
