@@ -111,7 +111,7 @@ export default {
                         "element_type": "input",
                         "type": "text",
                         "placeholder": "Enter vs"
-                    }, undefined]
+                    }]
                 }
             },
             // schema: {

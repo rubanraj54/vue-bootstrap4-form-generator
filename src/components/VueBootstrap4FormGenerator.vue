@@ -9,33 +9,91 @@
                 <template v-else-if="element.type === 'Object' && hasAttributeCheck(element.name)">
                     <div class="card">
                         <div class="card-header">
-                            {{element.name}}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    {{element.name}}
+                                </div>
+                                <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-sm btn-warning" @click="removeKey(element.name)">Remove {{element.name}}</button>
+                                <!-- <button type="button" class="btn btn-sm btn-warning" @click="$emit('remove-key',element.name)">Remove {{element.name}}</button> -->
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
-                            <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex"/>
+                            <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey"/>
                         </div>
                     </div>
                 </template>
 
                 <template v-else-if="element.type === 'Array'">
-                    <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" />
+                    <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray"/>
                 </template>
+            </div>
+            <a v-if="show_add_new_property" href="" @click.prevent="show_add_new_property=false">+ Add new property</a>
+            <div v-if="!show_add_new_property">
+                <hr>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                        {{selected_type}}
+                                    </button>
+                            <div class="dropdown-menu" aria-labelledby="triggerId">
+                                <button class="dropdown-item" :class="{'active':selected_type == 'string'}" href="" @click.prevent = "selected_type = 'string'">string</button>
+                                <button class="dropdown-item" :class="{'active':selected_type == 'number'}" href="" @click.prevent = "selected_type = 'number'">number</button>
+                                <button class="dropdown-item" :class="{'active':selected_type == 'boolean'}" href="" @click.prevent = "selected_type = 'boolean'">boolean</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="key" v-model="newkey" placeholder="key">
+                            <small v-if="key_error !== ''" class="form-text text-danger">{{key_error}}</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group" v-if="selected_type == 'string'">
+                            <input type="text" class="form-control" name="value" v-model="newvalue" placeholder="value">
+                        </div>
+                        <div class="form-group" v-if="selected_type == 'number'">
+                            <input type="number" class="form-control" name="value" v-model.number="newvalue" placeholder="value">
+                        </div>
+                        <div class="form-check" v-if="selected_type == 'boolean'">
+                            <label></label>
+                            <input type="checkbox" class="form-check-input" name="" id="" v-model="newvalue">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <button type="button" class="btn btn-primary btn-sm" @click="addNewProperty">Add new property</button>
+                        <button type="button" class="btn btn-danger btn-sm" @click="show_add_new_property = true">Close</button>
+                    </div>
+                </div>
+                <hr>
             </div>
         </template>
 
         <template v-else-if="schema.type === 'Array'">
             <div class="card">
                 <div class="card-header">
-                    {{parentElementName}}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{parentElementName}}
+                        </div>
+                        <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Basic example">
+                           <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
+                           <button type="button" class="btn btn-sm btn-warning" @click="$emit('remove-key',parentElementName)">Remove {{parentElementName}}</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
-                    <!-- {{defaults[0]}} -->
                     <div v-for="(value, key, index) in model" :key="index">
-                        <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" />
+                        <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey"/>
                         <button v-if="schema.schema.type !== 'input'" type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
                         <hr>
                     </div>
-                    <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
                 </div>
             </div>
         </template>
@@ -97,7 +155,12 @@ export default {
     },
     data: function () {
         return {
-            is_root: false
+            is_root: false,
+            show_add_new_property: true,
+            selected_type: "string",
+            newkey: "",
+            newvalue:"",
+            key_error:"",
         }
     },
     mounted() {
@@ -105,6 +168,8 @@ export default {
     },
     methods: {
         removeKey(key) {
+            console.log(key);
+            console.log(this.model);
             this.$delete(this.model, key)
         },
         clearAll(key) {
@@ -141,11 +206,76 @@ export default {
             } else {
                 model = _.cloneDeep(this.defaults);
             }
-            this.model.push(model);
+
+            if (!_.isEmpty(this.model)) {
+                this.model.push(model);
+            } else {
+                this.$emit("add-model-to-array",{"key":this.parentElementName,"defaults":_.cloneDeep(this.defaults)});
+            }
+        },
+        addModelToArray(payload) {
+            let key = payload.key;
+            let value = payload.defaults;
+
+            if(!_.has(this.model,key)) {
+                this.$set(this.model, key, [value]);
+            } else {
+                this.model[key].push(value);
+                console.log("addModelToArray: key already present in the model")
+            }
         },
         removeModel(index) {
             this.model.splice(index, 1);
         },
+        addNewProperty() {
+            let key = _.clone(this.newkey);
+            let value = _.clone(this.newvalue);
+            let type = "text";
+
+            if (key === "") {
+                this.key_error = "key is mandatory";
+                return;
+            }
+
+            if (_.has(this.model,key)) {
+                this.key_error = "Duplicate key";
+                return;
+            }
+
+            if (this.selected_type === "number") {
+                value = Number(value);
+                type = "number";
+            }
+
+            if (this.selected_type === "boolean") {
+                type = "checkbox";
+            }
+
+            let element = {
+                element_type: "input",
+                label: key,
+                name: key,
+                placeholder: "Enter " + key,
+                type: type
+            };
+
+            this.$set(this.model, key, value);
+            this.schema.elements.push(element);
+        }
+    },
+    watch: {
+        selected_type(newVal,oldVal) {
+            if (newVal == "boolean") {
+                this.newvalue = false;
+            } else if (newVal == "number") {
+                this.newvalue = 0;
+            } else {
+                this.newvalue = "";
+            }
+        },
+        newkey(newVal,oldVal) {
+            this.key_error = "";
+        }
     },
     components: {
         VueBootstrap4FormGenerator,
