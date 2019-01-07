@@ -97,7 +97,8 @@
                             name: "id",
                             element_type: "input",
                             type: "text",
-                            placeholder: "Enter ID"
+                            placeholder: "Enter ID",
+                            readonly:true
                         },
                         {
                             label: "URL",

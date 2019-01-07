@@ -2,8 +2,8 @@
     <div class="form-group" v-if="typeof model === 'object'">
         <label>{{element.label}}</label>
         <div class="input-group">
-            <input v-if="element.type == 'number'" :type="element.type" class="form-control" v-model.number='model[element.name]' :placeholder="element.placeholder">
-            <input v-else :type="element.type" class="form-control" v-model='model[element.name]' :placeholder="element.placeholder">
+            <input v-if="element.type == 'number'" :type="element.type" class="form-control" v-model.number='model[element.name]' :placeholder="element.placeholder" :readonly="readOnly">
+            <input v-else :type="element.type" class="form-control" v-model='model[element.name]' :placeholder="element.placeholder" :readonly="readOnly">
             <div class="input-group-append">
                 <button type="button" class="btn btn-sm btn-danger" @click="$emit('remove-key',element.name)">
                     <i class="fas fa-times-circle"></i>
@@ -13,7 +13,7 @@
     </div>
     <div class="form-group" v-else>
         <div class="input-group">
-            <input :type="element.type" class="form-control" v-bind:value='model' :placeholder="element.placeholder" @keyup.stop="updateValue($event)">
+            <input :type="element.type" class="form-control" v-bind:value='model' :placeholder="element.placeholder" @keyup.stop="updateValue($event)" :readonly="readOnly">
             <div class="input-group-append">
                 <button type="button" class="btn btn-sm btn-danger" @click="removeIndex">
                     <i class="fas fa-times-circle"></i>
@@ -31,7 +31,7 @@ export default {
     props: {
         element: {
             type: Object,
-            required: false
+            required: true
         },
         model: {
             type: Object| Array | String | Number | Boolean,
@@ -53,7 +53,12 @@ export default {
         removeIndex() {
             this.$emit('remove-index',{name:this.parentElementName,index:this.parentElementIndex});
         }
-    }
+    },
+    computed: {
+        readOnly() {
+            return (_.has(this.element,"readonly") && this.element.readonly);
+        }
+    },
 }
 </script>
 
