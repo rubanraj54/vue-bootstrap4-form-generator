@@ -84,13 +84,13 @@
                         </div>
                         <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Basic example">
                            <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
-                           <button type="button" class="btn btn-sm btn-warning" @click="$emit('remove-key',parentElementName)">Remove {{parentElementName}}</button>
+                           <button type="button" class="btn btn-sm btn-warning" @click="emitRemoveKey">Remove {{parentElementName}}</button>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div v-for="(value, key, index) in model" :key="index">
-                        <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey"/>
+                        <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray"/>
                         <button v-if="schema.schema.type !== 'input'" type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
                         <hr>
                     </div>
@@ -168,9 +168,18 @@ export default {
     },
     methods: {
         removeKey(key) {
-            console.log(key);
-            console.log(this.model);
-            this.$delete(this.model, key)
+            if (this.isRoot == true && this.schema.type == "Array") {
+                this.model = [];
+            } else {
+                this.$delete(this.model, key)
+            }
+        },
+        emitRemoveKey() {
+            if (this.isRoot == true && this.schema.type == "Array") {
+                this.model.splice(0,this.model.length);
+            } else {
+                this.$emit('remove-key',this.parentElementName)
+            }
         },
         clearAll(key) {
             this.model[key] = [];
@@ -201,13 +210,14 @@ export default {
         },
         addModel() {
             let model = null;
+
             if (this.isRoot == true && this.schema.type == "Array") {
                 model = _.cloneDeep(this.defaults[0]);
             } else {
                 model = _.cloneDeep(this.defaults);
             }
 
-            if (!_.isEmpty(this.model)) {
+            if (!_.isEmpty(this.model) || Array.isArray(this.model)) {
                 this.model.push(model);
             } else {
                 this.$emit("add-model-to-array",{"key":this.parentElementName,"defaults":_.cloneDeep(this.defaults)});
@@ -216,7 +226,6 @@ export default {
         addModelToArray(payload) {
             let key = payload.key;
             let value = payload.defaults;
-
             if(!_.has(this.model,key)) {
                 this.$set(this.model, key, [value]);
             } else {
