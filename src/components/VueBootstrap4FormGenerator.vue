@@ -13,9 +13,8 @@
                                 <div class="col-md-6">
                                     {{element.name}}
                                 </div>
-                                <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-sm btn-warning" @click="removeKey(element.name)">Remove {{element.name}}</button>
-                                <!-- <button type="button" class="btn btn-sm btn-warning" @click="$emit('remove-key',element.name)">Remove {{element.name}}</button> -->
+                                <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Object of object">
+                                    <button type="button" class="btn btn-sm btn-warning" @click="removeKey(element.name)">Remove {{element.name}}</button>
                                 </div>
                             </div>
                         </div>
@@ -26,7 +25,7 @@
                 </template>
 
                 <template v-else-if="element.type === 'Array'">
-                    <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray"/>
+                    <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray" @duplicate-model="handleDuplicateModel"/>
                 </template>
             </div>
             <a v-if="show_add_new_property" href="" @click.prevent="show_add_new_property=false">+ Add new property</a>
@@ -91,6 +90,7 @@
                 <div class="card-body">
                     <div v-for="(value, key, index) in model" :key="index">
                         <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray"/>
+                        <button v-if="schema.schema.type !== 'input'" type="button" class="btn btn-sm btn-primary" @click="emitDuplicateModel(key,parentElementName)">Duplicate {{parentElementName}}</button>
                         <button v-if="schema.schema.type !== 'input'" type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
                         <hr>
                     </div>
@@ -173,6 +173,22 @@ export default {
             } else {
                 this.$delete(this.model, key)
             }
+        },
+
+        emitDuplicateModel(key,parentElementName) {
+            if (this.isRoot == true && this.schema.type == "Array") {
+                let index = key + 1;
+                let model = _.cloneDeep(this.model[key]);
+                this.model.splice(index,0,model);
+            } else {
+                this.$emit('remove-key',this.parentElementName)
+                this.$emit("duplicate-model",{key:key,parentElementName:parentElementName});
+            }
+        },
+        handleDuplicateModel(payload) {
+            let index = payload.key + 1;
+            let model = _.cloneDeep(this.model[payload.parentElementName][payload.key]);
+            this.model[payload.parentElementName].splice(index,0,model);
         },
         emitRemoveKey() {
             if (this.isRoot == true && this.schema.type == "Array") {
