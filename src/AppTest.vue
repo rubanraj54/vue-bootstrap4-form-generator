@@ -54,27 +54,35 @@ export default {
             schema: {
                 "type": "Array",
                 "name": null,
+                "canAdd": true,
+                "canRemove": true,
                 "schema": {
                     "type": "Object",
                     "name": null,
+                    "canRemove": false,
+                    "canDuplicate": false,
+                    "canAddProperty": true,
                     "elements": [{
                         "label": "bn",
                         "name": "bn",
                         "element_type": "input",
                         "type": "text",
-                        "placeholder": "Enter bn"
+                        "placeholder": "Enter bn",
+                        "readonly": true,
                     }, {
                         "label": "bt",
                         "name": "bt",
                         "element_type": "input",
                         "type": "number",
-                        "placeholder": "Enter bt"
+                        "placeholder": "Enter bt",
+                        "canRemove": true
                     }, {
                         "label": "bu",
                         "name": "bu",
                         "element_type": "input",
                         "type": "text",
-                        "placeholder": "Enter bu"
+                        "placeholder": "Enter bu",
+                        "canRemove": true
                     }, {
                         "label": "bver",
                         "name": "bver",

@@ -129,6 +129,9 @@ export default {
                     "placeholder": "Enter resource"
                 }, {
                     "type": "Object",
+                    "canDuplicate":true,
+                    "canRemove":true,
+                    "canAddProperty":true,
                     "name": "meta",
                     "elements": []
                 }, {
@@ -166,8 +169,13 @@ export default {
                 }, {
                     "type": "Array",
                     "name": "aggregation",
+                    "canAdd" : true,
+                    "canRemove" : true,
                     "schema": {
                         "type": "Object",
+                        "canDuplicate":true,
+                        "canRemove":true,
+                        "canAddProperty":true,
                         "name": null,
                         "elements": [{
                             "label": "id",
@@ -190,6 +198,8 @@ export default {
                         }, {
                             "type": "Array",
                             "name": "aggregates",
+                            "canAdd" : true,
+                            "canRemove" : true,
                             "schema": {
                                 "type": "input",
                                 "element": {

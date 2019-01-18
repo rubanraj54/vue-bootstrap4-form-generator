@@ -15,13 +15,13 @@ Vue.config.productionTip = false
 //   template: '<App/>'
 // })
 
-new Vue({
-    el: '#app',
-    components: {
-        AppTest
-    },
-    template: '<AppTest/>'
-})
+// new Vue({
+//     el: '#app',
+//     components: {
+//         AppTest
+//     },
+//     template: '<AppTest/>'
+// })
 
 // new Vue({
 //     el: '#app',
@@ -31,10 +31,10 @@ new Vue({
 //     template: '<AppRegistry/>'
 // })
 
-// new Vue({
-//     el: '#app',
-//     components: {
-//         AppOriginal
-//     },
-//     template: '<AppOriginal/>'
-// })
+new Vue({
+    el: '#app',
+    components: {
+        AppOriginal
+    },
+    template: '<AppOriginal/>'
+})

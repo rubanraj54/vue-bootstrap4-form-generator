@@ -14,7 +14,7 @@
                                     {{element.name}}
                                 </div>
                                 <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Object of object">
-                                    <button type="button" class="btn btn-sm btn-warning" @click="removeKey(element.name)">Remove {{element.name}}</button>
+                                    <button v-if="element.canRemove" type="button" class="btn btn-sm btn-warning" @click="removeKey(element.name)">Remove {{element.name}}</button>
                                 </div>
                             </div>
                         </div>
@@ -28,8 +28,8 @@
                     <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray" @duplicate-model="handleDuplicateModel"/>
                 </template>
             </div>
-            <a v-if="show_add_new_property" href="" @click.prevent="show_add_new_property=false">+ Add new property</a>
-            <div v-if="!show_add_new_property">
+            <a v-if="ShowAddNewProperty && canAddProperty" href="" @click.prevent="ShowAddNewProperty=false">+ Add new property</a>
+            <div v-if="!ShowAddNewProperty && canAddProperty">
                 <hr>
                 <div class="row">
                     <div class="col-md-2">
@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <button type="button" class="btn btn-primary btn-sm" @click="addNewProperty">Add new property</button>
-                        <button type="button" class="btn btn-danger btn-sm" @click="show_add_new_property = true">Close</button>
+                        <button type="button" class="btn btn-danger btn-sm" @click="ShowAddNewProperty = true">Close</button>
                     </div>
                 </div>
                 <hr>
@@ -82,16 +82,16 @@
                             {{parentElementName}}
                         </div>
                         <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Basic example">
-                           <button type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
-                           <button type="button" class="btn btn-sm btn-warning" @click="emitRemoveKey">Remove {{parentElementName}}</button>
+                           <button v-if="canAdd" type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
+                           <button v-if="canRemove" type="button" class="btn btn-sm btn-warning" @click="emitRemoveKey">Remove {{parentElementName}}</button>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div v-for="(value, key, index) in model" :key="index">
                         <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray"/>
-                        <button v-if="schema.schema.type !== 'input'" type="button" class="btn btn-sm btn-primary" @click="emitDuplicateModel(key,parentElementName)">Duplicate {{parentElementName}}</button>
-                        <button v-if="schema.schema.type !== 'input'" type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
+                        <button v-if="canDuplicateObject" type="button" class="btn btn-sm btn-primary" @click="emitDuplicateModel(key,parentElementName)">Duplicate {{parentElementName}}</button>
+                        <button v-if="canRemoveObject" type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
                         <hr>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
 
         <template v-else>
             <div>
-                fkj
+                Invalid data given
             </div>
         </template>
     </div>
@@ -114,6 +114,7 @@
 import VueBootstrap4FormGenerator from './VueBootstrap4FormGenerator.vue'
 import InputElement from './Elements/InputElement.vue'
 var _ = require('lodash');
+var has = require('lodash/has');
 
 export default {
     name: "VueBootstrap4FormGenerator",
@@ -156,7 +157,7 @@ export default {
     data: function () {
         return {
             is_root: false,
-            show_add_new_property: true,
+            ShowAddNewProperty: true,
             selected_type: "string",
             newkey: "",
             newvalue:"",
@@ -181,7 +182,7 @@ export default {
                 let model = _.cloneDeep(this.model[key]);
                 this.model.splice(index,0,model);
             } else {
-                this.$emit('remove-key',this.parentElementName)
+                // this.$emit('remove-key',this.parentElementName)
                 this.$emit("duplicate-model",{key:key,parentElementName:parentElementName});
             }
         },
@@ -305,6 +306,26 @@ export default {
     components: {
         VueBootstrap4FormGenerator,
         InputElement
+    },
+    computed: {
+        type() {
+            return this.schema.type;
+        },
+        canAdd() {
+            return (this.type == "Array" && this.schema.canAdd);
+        },
+        canRemove() {
+            return (this.type == "Array" && this.schema.canRemove);
+        },
+        canRemoveObject() {
+            return (this.type == "Array" && this.schema.schema.type == "Object" && this.schema.schema.canRemove);
+        },
+        canDuplicateObject() {
+            return (this.type == "Array" && this.schema.schema.type == "Object" && this.schema.schema.canDuplicate);
+        },
+        canAddProperty() {
+            return (this.type == "Object" && this.schema.canAddProperty);
+        },
     }
 }
 </script>
