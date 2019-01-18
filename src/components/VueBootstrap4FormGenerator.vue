@@ -28,47 +28,36 @@
                     <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray" @duplicate-model="handleDuplicateModel"/>
                 </template>
             </div>
-            <a v-if="ShowAddNewProperty && canAddProperty" href="" @click.prevent="ShowAddNewProperty=false">+ Add new property</a>
-            <div v-if="!ShowAddNewProperty && canAddProperty">
+            <a v-if="showAddNewProperty && canAddProperty" href="" @click.prevent="showAddNewProperty=false">+ Add new property</a>
+            <div v-if="!showAddNewProperty && canAddProperty">
                 <hr>
                 <div class="row">
-                    <div class="col-md-2">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                    <div class="input-group col-md-6">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
                                         {{selected_type}}
                                     </button>
-                            <div class="dropdown-menu" aria-labelledby="triggerId">
+                            <div class="dropdown-menu">
                                 <button class="dropdown-item" :class="{'active':selected_type == 'string'}" href="" @click.prevent = "selected_type = 'string'">string</button>
                                 <button class="dropdown-item" :class="{'active':selected_type == 'number'}" href="" @click.prevent = "selected_type = 'number'">number</button>
                                 <button class="dropdown-item" :class="{'active':selected_type == 'boolean'}" href="" @click.prevent = "selected_type = 'boolean'">boolean</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="key" v-model="newkey" placeholder="key">
-                            <small v-if="key_error !== ''" class="form-text text-danger">{{key_error}}</small>
+                        <input type="text" class="form-control" :class="{'is-invalid' : (keyError !== '')}" name="key" v-model="newkey" placeholder="key">
+                        <div class="input-group-append">
+                            <button class="btn btn-success" type="button" @click="addNewProperty">
+                                <i class="fas fa-save"></i>
+                            </button>
+                            <button class="btn btn-danger" type="button" @click="resetAddNewProperty">
+                                <i class="fas fa-times-circle"></i>
+                            </button>
                         </div>
+                        <br/>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group" v-if="selected_type == 'string'">
-                            <input type="text" class="form-control" name="value" v-model="newvalue" placeholder="value">
-                        </div>
-                        <div class="form-group" v-if="selected_type == 'number'">
-                            <input type="number" class="form-control" name="value" v-model.number="newvalue" placeholder="value">
-                        </div>
-                        <div class="form-check" v-if="selected_type == 'boolean'">
-                            <label></label>
-                            <input type="checkbox" class="form-check-input" name="" id="" v-model="newvalue">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3">
-                        <button type="button" class="btn btn-primary btn-sm" @click="addNewProperty">Add new property</button>
-                        <button type="button" class="btn btn-danger btn-sm" @click="ShowAddNewProperty = true">Close</button>
-                    </div>
+                    <small v-if="keyError !== ''" class="form-text text-danger">
+                        {{keyError}}
+                    </small>
                 </div>
                 <hr>
             </div>
@@ -157,11 +146,11 @@ export default {
     data: function () {
         return {
             is_root: false,
-            ShowAddNewProperty: true,
+            showAddNewProperty: true,
             selected_type: "string",
             newkey: "",
             newvalue:"",
-            key_error:"",
+            keyError:"",
         }
     },
     mounted() {
@@ -255,25 +244,26 @@ export default {
         },
         addNewProperty() {
             let key = _.clone(this.newkey);
-            let value = _.clone(this.newvalue);
+            let value = "";
             let type = "text";
 
             if (key === "") {
-                this.key_error = "key is mandatory";
+                this.keyError = "key is mandatory";
                 return;
             }
 
             if (_.has(this.model,key)) {
-                this.key_error = "Duplicate key";
+                this.keyError = "Duplicate key";
                 return;
             }
 
             if (this.selected_type === "number") {
-                value = Number(value);
+                value = 0;
                 type = "number";
             }
 
             if (this.selected_type === "boolean") {
+                value = false;
                 type = "checkbox";
             }
 
@@ -287,6 +277,12 @@ export default {
 
             this.$set(this.model, key, value);
             this.schema.elements.push(element);
+            this.resetAddNewProperty();
+        },
+        resetAddNewProperty() {
+            this.showAddNewProperty = true;
+            this.newkey = "";
+            this.keyError="";
         }
     },
     watch: {
@@ -300,7 +296,7 @@ export default {
             }
         },
         newkey(newVal,oldVal) {
-            this.key_error = "";
+            this.keyError = "";
         }
     },
     components: {
