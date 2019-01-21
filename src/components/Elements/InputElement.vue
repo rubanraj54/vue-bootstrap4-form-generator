@@ -2,8 +2,8 @@
     <div class="form-group" v-if="typeof model === 'object'">
         <label>{{element.label}}</label>
         <div class="input-group">
-            <input v-if="element.type == 'number'" :type="element.type" class="form-control" v-model.number='model[element.name]' :placeholder="element.placeholder" :readonly="readOnly">
-            <input v-else :type="element.type" class="form-control" v-model='model[element.name]' :placeholder="element.placeholder" :readonly="readOnly">
+            <input v-if="element.type == 'number'" :type="element.type" class="form-control" v-model.number.trim='model[element.name]' :placeholder="element.placeholder" :readonly="readOnly">
+            <input v-else :type="element.type" class="form-control" v-model.trim='model[element.name]' :placeholder="element.placeholder" :readonly="readOnly">
             <div class="input-group-append" v-if="canRemove">
                 <button type="button" class="btn btn-sm btn-danger" @click="$emit('remove-key',element.name)">
                     <i class="fas fa-times-circle"></i>
