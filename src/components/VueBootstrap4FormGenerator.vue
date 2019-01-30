@@ -13,8 +13,10 @@
                                 <div class="col-md-6">
                                     {{element.name}}
                                 </div>
-                                <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Object of object">
-                                    <button v-if="element.canRemove" type="button" class="btn btn-sm btn-warning" @click="removeKey(element.name)">Remove {{element.name}}</button>
+                                <div class="col-md-6">
+                                    <div class="btn-group float-right" role="group" aria-label="Object of object">
+                                        <button v-if="element.canRemove" type="button" class="btn btn-sm btn-warning" @click="removeKey(element.name)">Remove {{element.name}}</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -70,9 +72,11 @@
                         <div class="col-md-6">
                             {{parentElementName}}
                         </div>
-                        <div class="btn-group col-md-6 justify-content-end" role="group" aria-label="Basic example">
-                           <button v-if="canAdd" type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
-                           <button v-if="canRemove" type="button" class="btn btn-sm btn-warning" @click="emitRemoveKey">Remove {{parentElementName}}</button>
+                        <div class="col-md-6">
+                            <div class="btn-group float-right" role="group" aria-label="Basic example">
+                            <button v-if="canAdd" type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
+                            <button v-if="canRemove" type="button" class="btn btn-sm btn-warning" @click="emitRemoveKey">Remove {{parentElementName}}</button>
+                            </div>
                         </div>
                     </div>
                 </div>
