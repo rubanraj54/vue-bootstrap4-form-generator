@@ -228,6 +228,9 @@ export default {
             }
 
             if (!_.isEmpty(this.model) || Array.isArray(this.model)) {
+                if (!this.model) {
+                    this.model = [];
+                }
                 this.model.push(model);
             } else {
                 this.$emit("add-model-to-array",{"key":this.parentElementName,"defaults":_.cloneDeep(this.defaults)});
@@ -239,8 +242,10 @@ export default {
             if(!_.has(this.model,key)) {
                 this.$set(this.model, key, [value]);
             } else {
+                if (!this.model[key]) {
+                    this.model[key] = [];
+                }
                 this.model[key].push(value);
-                console.log("addModelToArray: key already present in the model")
             }
         },
         removeModel(index) {

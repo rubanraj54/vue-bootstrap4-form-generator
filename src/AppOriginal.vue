@@ -27,7 +27,7 @@ export default {
                 "url": "",
                 "data": "",
                 "resource": "",
-                "meta": {},
+                "meta": null,
                 "connector": {
                     "mqtt": {
                         "url": "",
@@ -36,13 +36,14 @@ export default {
                     }
                 },
                 "retention": "",
-                "aggregation": [{
-                    "id": "",
-                    "interval": "",
-                    "data": "",
-                    "aggregates": [""],
-                    "retention": ""
-                }],
+                "aggregation": null,
+                // "aggregation": [{
+                //     "id": "",
+                //     "interval": "",
+                //     "data": "",
+                //     "aggregates": [""],
+                //     "retention": ""
+                // }],
                 "type": "",
                 "format": ""
             },
