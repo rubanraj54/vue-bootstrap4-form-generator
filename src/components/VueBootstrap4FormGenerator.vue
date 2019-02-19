@@ -165,7 +165,9 @@ export default {
             if (this.isRoot == true && this.schema.type == "Array") {
                 this.model = [];
             } else {
-                this.$delete(this.model, key)
+                this.$delete(this.model, key);
+                let index = this.schema.elements.findIndex((element => element.name === key));
+                this.schema.elements.splice(index,1);
             }
         },
 
