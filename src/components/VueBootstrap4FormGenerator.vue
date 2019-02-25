@@ -15,7 +15,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="btn-group float-right" role="group" aria-label="Object of object">
-                                        <button v-if="element.canRemove" type="button" class="btn btn-sm btn-warning" @click="removeKey(element.name)">Remove {{element.name}}</button>
+                                        <button v-if="element.canRemove" type="button" class="btn btn-sm btn-danger" @click="removeKey(element.name)" v-html="(schema.removeObjectButtonText) ? schema.removeObjectButtonText(element.name) : ('Remove ' + element.name)">Remove {{element.name}}</button>
                                     </div>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                         <input type="text" class="form-control" :class="{'is-invalid' : (keyError !== '')}" name="key" v-model="newkey" placeholder="key">
                         <div class="input-group-append">
                             <button class="btn btn-success" type="button" @click="addNewProperty">
-                                <i class="fas fa-save"></i>
+                                <i class="fas fa-save"></i>                                
                             </button>
                             <button class="btn btn-danger" type="button" @click="resetAddNewProperty">
                                 <i class="fas fa-times-circle"></i>
@@ -74,18 +74,18 @@
                         </div>
                         <div class="col-md-6">
                             <div class="btn-group float-right" role="group" aria-label="Basic example">
-                            <button v-if="canAdd" type="button" class="btn btn-sm btn-primary" @click="addModel()">Add {{parentElementName}}</button>
-                            <button v-if="canRemove" type="button" class="btn btn-sm btn-warning" @click="emitRemoveKey">Remove {{parentElementName}}</button>
+                            <button v-if="canAdd" type="button" class="btn btn-sm btn-primary" @click="addModel()" v-html="(schema.addButtonText) ? schema.addButtonText(parentElementName) : ('Add ' + parentElementName)">
+                            </button>
+                            <button v-if="canRemove" type="button" class="btn btn-sm btn-danger" @click="emitRemoveKey" v-html="(schema.removeButtonText) ? schema.removeButtonText(parentElementName) : ('Remove ' + parentElementName)"></button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    <div v-for="(value, key, index) in model" :key="index">
+                    <div v-for="(value, key, index) in model" :key="index" :style="[schema.schema.type == 'Object' ? {backgroundColor:'#f1f1f1', padding:'10px', marginTop:'10px'} : {}]">
                         <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray"/>
-                        <button v-if="canDuplicateObject" type="button" class="btn btn-sm btn-primary" @click="emitDuplicateModel(key,parentElementName)">Duplicate {{parentElementName}}</button>
-                        <button v-if="canRemoveObject" type="button" class="btn btn-sm btn-warning" @click="removeModel(key)">Remove {{parentElementName}}</button>
-                        <hr>
+                        <button v-if="canDuplicateObject" type="button" class="btn btn-sm btn-primary" @click="emitDuplicateModel(key,parentElementName)" v-html="(schema.duplicateButtonText) ? schema.duplicateButtonText(parentElementName) : ('Duplicate ' + parentElementName)"></button>
+                        <button v-if="canRemoveObject" type="button" class="btn btn-sm btn-danger" @click="removeModel(key)" v-html="(schema.removeObjectButtonText) ? schema.removeObjectButtonText(parentElementName) : ('Remove ' + parentElementName)"></button>
                     </div>
                 </div>
             </div>

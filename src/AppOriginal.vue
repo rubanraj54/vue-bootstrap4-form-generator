@@ -104,6 +104,9 @@ export default {
             schema: {
                 "type": "Object",
                 "name": null,
+                "removeObjectButtonText" : function(parentElementName) {
+                    return '<i class="fas fa-times-circle"></i>';
+                },
                 "elements": [{
                     "label": "id",
                     "name": "id",
@@ -171,12 +174,24 @@ export default {
                     "type": "Array",
                     "name": "aggregation",
                     "canAdd" : true,
+                    "addButtonText" : function(parentElementName) {
+                        return '<i class="fas fa-plus-circle"></i>';
+                    },
+                    "removeButtonText" : function(parentElementName) {
+                        return '<i class="fas fa-times-circle"></i>';
+                    },
+                    "removeObjectButtonText" : function(parentElementName) {
+                        return '<i class="fas fa-minus-circle"></i>';
+                    },
+                    "duplicateButtonText" : function(parentElementName) {
+                        return '<i class="fas fa-clone"></i>';
+                    },
                     "canRemove" : true,
                     "schema": {
                         "type": "Object",
                         "canDuplicate":true,
                         "canRemove":true,
-                        "canAddProperty":true,
+                        "canAddProperty":true,                    
                         "name": null,
                         "elements": [{
                             "label": "id",
@@ -201,6 +216,12 @@ export default {
                             "name": "aggregates",
                             "canAdd" : true,
                             "canRemove" : true,
+                            "addButtonText" : function(parentElementName) {
+                                return '<i class="fas fa-plus-circle"></i>';
+                            },
+                            "removeButtonText" : function(parentElementName) {
+                                return '<i class="fas fa-times-circle"></i>';
+                            },                                
                             "schema": {
                                 "type": "input",
                                 "element": {
