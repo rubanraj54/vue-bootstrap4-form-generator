@@ -7,6 +7,7 @@
                 </template>
 
                 <template v-else-if="element.type === 'Object' && hasAttributeCheck(element.name)">
+
                     <div class="card">
                         <div class="card-header">
                             <div class="row">
@@ -15,7 +16,8 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="btn-group float-right" role="group" aria-label="Object of object">
-                                        <button v-if="element.canRemove" type="button" class="btn btn-sm btn-danger" @click="removeKey(element.name)" v-html="(schema.removeObjectButtonText) ? schema.removeObjectButtonText(element.name) : ('Remove ' + element.name)">Remove {{element.name}}</button>
+                                        <a href="" v-if="element.canRemove" class="text-danger" @click.prevent="removeKey(element.name)" v-html="(schema.removeObjectButtonText) ? schema.removeObjectButtonText(element.name) : ('Remove ' + element.name)"></a>
+                                        <a href="" v-if="canRemoveObject" class="float-right text-danger" @click.prevent="removeModel(parentElementIndex)" v-html="removeObjectButtonText"></a>
                                     </div>
                                 </div>
                             </div>
@@ -66,8 +68,11 @@
                 </div>
                 <div class="col-md-4">
                     <div class="float-right">
-                        <button v-if="canDuplicateObject" type="button" class="btn btn-sm btn-primary" @click="emitDuplicateModel(parentElementIndex,parentElementName)" v-html="duplicateButtonText"></button>
-                        <button v-if="canRemoveObject" type="button" class="btn btn-sm btn-danger" @click="removeModel(key)" v-html="removeObjectButtonText"></button>
+                        <a href="" v-if="canDuplicateObject" class="text-primary" @click.prevent="emitDuplicateModel(parentElementIndex,parentElementName)" v-html="duplicateButtonText"></a>
+                        <a href="" v-if="canRemoveObject" class="text-danger" @click.prevent="removeModel(parentElementIndex)" v-html="removeObjectButtonText"></a>
+
+                        <!-- <button v-if="canDuplicateObject" type="button" class="btn btn-sm btn-primary" @click="emitDuplicateModel(parentElementIndex,parentElementName)" v-html="duplicateButtonText"></button> -->
+                        <!-- <button v-if="canRemoveObject" type="button" class="btn btn-sm btn-danger" @click="removeModel(key)" v-html="removeObjectButtonText"></button> -->
                     </div>
                 </div>
             </div>
@@ -82,33 +87,35 @@
                         </div>
                         <div class="col-md-6">
                             <div class="btn-group float-right" role="group" aria-label="Basic example">
-                            <button v-if="canRemove" type="button" class="btn btn-sm btn-danger" @click="emitRemoveKey" v-html="(schema.removeButtonText) ? schema.removeButtonText(parentElementName) : ('Remove ' + parentElementName)"></button>
+                            <a href="" v-if="canRemove" class="text-danger" @click.prevent="emitRemoveKey" v-html="(schema.removeButtonText) ? schema.removeButtonText(parentElementName) : ('Remove ' + parentElementName)"></a>
+                            <!-- <button v-if="canRemove" type="button" class="btn btn-sm btn-danger" @click="emitRemoveKey" v-html="(schema.removeButtonText) ? schema.removeButtonText(parentElementName) : ('Remove ' + parentElementName)"></button> -->
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <div v-for="(value, key, index) in model" :key="index" :style="[schema.schema.type == 'Object' ? {backgroundColor:'#f1f1f1', padding:'10px', marginTop:'10px'} : {}]">
-                        <vue-bootstrap4-form-generator :isRoot="is_root" 
-                                                        :defaults="defaults" 
-                                                        :parentElementIndex="key" 
-                                                        :model="value" 
-                                                        :parentElementName="parentElementName" 
-                                                        :schema="schema.schema" 
-                                                        :parentType="schema.type" 
+                        <vue-bootstrap4-form-generator :isRoot="is_root"
+                                                        :defaults="defaults"
+                                                        :parentElementIndex="key"
+                                                        :model="value"
+                                                        :parentElementName="parentElementName"
+                                                        :schema="schema.schema"
+                                                        :parentType="schema.type"
                                                         :duplicate-button-text="(schema.duplicateButtonText) ? schema.duplicateButtonText(parentElementName) : ('Duplicate ' + parentElementName)"
                                                         :remove-object-button-text="(schema.removeObjectButtonText) ? schema.removeObjectButtonText(parentElementName) : ('Remove ' + parentElementName)"
-                                                        @update-value="updateValue" 
-                                                        @remove-index="removeIndex" 
-                                                        @remove-key="removeKey" 
-                                                        @add-model-to-array="addModelToArray" 
+                                                        @update-value="updateValue"
+                                                        @remove-index="removeIndex"
+                                                        @remove-key="removeKey"
+                                                        @add-model-to-array="addModelToArray"
                                                         @duplicate-model="handleDuplicateModel"/>
                     </div>
-                    
+
                     <div class="row float-right" :class="{'mt-2': (type == 'Array' && schema.schema.elements) }">
                         <div class="col-md-6">
-                            <button v-if="canAdd" type="button" class="btn btn-sm btn-primary" @click="addModel()" v-html="(schema.addButtonText) ? schema.addButtonText(parentElementName) : ('Add ' + parentElementName)">
-                            </button>                                                        
+                            <a href="" v-if="canAdd" class="text-primary" @click.prevent="addModel" v-html="(schema.addButtonText) ? schema.addButtonText(parentElementName) : ('Add ' + parentElementName)"></a>
+                            <!-- <button v-if="canAdd" type="button" class="btn btn-sm btn-primary" @click="addModel()" v-html="(schema.addButtonText) ? schema.addButtonText(parentElementName) : ('Add ' + parentElementName)"> -->
+                            <!-- </button> -->
                         </div>
                     </div>
                 </div>

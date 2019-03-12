@@ -191,7 +191,7 @@ export default {
                         "type": "Object",
                         "canDuplicate":true,
                         "canRemove":true,
-                        "canAddProperty":true,                    
+                        "canAddProperty":true,
                         "name": null,
                         "elements": [{
                             "label": "id",
@@ -221,7 +221,7 @@ export default {
                             },
                             "removeButtonText" : function(parentElementName) {
                                 return '<i class="fas fa-times-circle"></i>';
-                            },                                
+                            },
                             "schema": {
                                 "type": "input",
                                 "element": {

@@ -1,25 +1,16 @@
 <template>
-    <div class="form-group" v-if="typeof model === 'object'">
-        <label>{{element.label}}</label>
-        <div class="input-group">
-            <input v-if="element.type == 'number'" :type="element.type" class="form-control" v-model.number.trim='model[element.name]' :placeholder="element.placeholder" :readonly="readOnly">
-            <input v-else :type="element.type" class="form-control" v-model.trim='model[element.name]' :placeholder="element.placeholder" :readonly="readOnly">
-            <div class="input-group-append" v-if="canRemove">
-                <button type="button" class="btn btn-sm btn-danger" @click="$emit('remove-key',element.name)">
-                    <i class="fas fa-times-circle"></i>
-                </button>
-            </div>
-        </div>
+    <div class="form-group has-clear-right" v-if="typeof model === 'object'">
+        <span class="form-control-feedback vbt-simple-filter-clear" @click="$emit('remove-key',element.name)">
+            <i class="fas fa-times"></i>
+        </span>
+        <input v-if="element.type == 'number'" :type="element.type" class="form-control" v-model.number.trim='model[element.name]' :placeholder="element.placeholder" :readonly="readOnly">
+        <input v-else :type="element.type" class="form-control" v-model.trim='model[element.name]' :placeholder="element.placeholder" :readonly="readOnly">
     </div>
-    <div class="form-group" v-else>
-        <div class="input-group">
-            <input :type="element.type" class="form-control" v-bind:value='model' :placeholder="element.placeholder" @keyup.stop="updateValue($event)" :readonly="readOnly">
-            <div class="input-group-append" v-if="canRemove">
-                <button type="button" class="btn btn-sm btn-danger" @click="removeIndex">
-                    <i class="fas fa-times-circle"></i>
-                </button>
-            </div>
-        </div>
+    <div class="form-group has-clear-right" v-else>
+        <span class="form-control-feedback vbt-simple-filter-clear" @click="removeIndex">
+            <i class="fas fa-times"></i>
+        </span>
+        <input :type="element.type" class="form-control" v-bind:value='model' :placeholder="element.placeholder" @keyup.stop="updateValue($event)" :readonly="readOnly">
     </div>
 </template>
 
@@ -66,3 +57,26 @@ export default {
 }
 </script>
 
+<style scoped>
+.has-clear-right {
+        position: relative;
+    }
+    .has-clear-right .form-control {
+        padding-right: 2.375rem;
+    }
+    .has-clear-right .form-control-feedback {
+        position: absolute;
+        top: 0;
+        right: 0;
+        z-index: 2;
+        display: block;
+        width: 2.375rem;
+        height: 2.375rem;
+        line-height: 2.375rem;
+        text-align: center;
+        cursor: pointer;
+    }
+    .has-clear-right .form-control-feedback:hover {
+        color: red;
+    }
+</style>
