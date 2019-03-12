@@ -30,38 +30,46 @@
                     <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults[element.name][0]" :parentType="schema.type" :model="model[element.name]" :schema="element" :parentElementName="element.name" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray" @duplicate-model="handleDuplicateModel"/>
                 </template>
             </div>
-            <a v-if="showAddNewProperty && canAddProperty" href="" @click.prevent="showAddNewProperty=false">+ Add new property</a>
-            <div v-if="!showAddNewProperty && canAddProperty">
-                <hr>
-                <div class="row">
-                    <div class="input-group col-md-6">
-                        <div class="input-group-prepend">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                        {{selected_type}}
+            <div class="row">
+                <div class="col-md-8">
+                    <a v-if="showAddNewProperty && canAddProperty" href="" @click.prevent="showAddNewProperty=false">+ Add new property</a>
+                    <div v-if="!showAddNewProperty && canAddProperty">
+                        <div class="row">
+                            <div class="input-group col-md-8">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                                {{selected_type}}
+                                            </button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item" :class="{'active':selected_type == 'string'}" href="" @click.prevent = "selected_type = 'string'">string</button>
+                                        <button class="dropdown-item" :class="{'active':selected_type == 'number'}" href="" @click.prevent = "selected_type = 'number'">number</button>
+                                        <button class="dropdown-item" :class="{'active':selected_type == 'boolean'}" href="" @click.prevent = "selected_type = 'boolean'">boolean</button>
+                                    </div>
+                                </div>
+                                <input type="text" class="form-control" :class="{'is-invalid' : (keyError !== '')}" name="key" v-model="newkey" placeholder="key">
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" type="button" @click="addNewProperty">
+                                        <i class="fas fa-save"></i>
                                     </button>
-                            <div class="dropdown-menu">
-                                <button class="dropdown-item" :class="{'active':selected_type == 'string'}" href="" @click.prevent = "selected_type = 'string'">string</button>
-                                <button class="dropdown-item" :class="{'active':selected_type == 'number'}" href="" @click.prevent = "selected_type = 'number'">number</button>
-                                <button class="dropdown-item" :class="{'active':selected_type == 'boolean'}" href="" @click.prevent = "selected_type = 'boolean'">boolean</button>
+                                    <button class="btn btn-danger" type="button" @click="resetAddNewProperty">
+                                        <i class="fas fa-times-circle"></i>
+                                    </button>
+                                </div>
+                                <br/>
                             </div>
+                            <small v-if="keyError !== ''" class="form-text text-danger">
+                                {{keyError}}
+                            </small>
                         </div>
-                        <input type="text" class="form-control" :class="{'is-invalid' : (keyError !== '')}" name="key" v-model="newkey" placeholder="key">
-                        <div class="input-group-append">
-                            <button class="btn btn-success" type="button" @click="addNewProperty">
-                                <i class="fas fa-save"></i>                                
-                            </button>
-                            <button class="btn btn-danger" type="button" @click="resetAddNewProperty">
-                                <i class="fas fa-times-circle"></i>
-                            </button>
-                        </div>
-                        <br/>
                     </div>
-                    <small v-if="keyError !== ''" class="form-text text-danger">
-                        {{keyError}}
-                    </small>
                 </div>
-                <hr>
+                <div class="col-md-4">
+                    <div class="float-right">
+                        <button v-if="canDuplicateObject" type="button" class="btn btn-sm btn-primary" @click="emitDuplicateModel(parentElementIndex,parentElementName)" v-html="duplicateButtonText"></button>
+                        <button v-if="canRemoveObject" type="button" class="btn btn-sm btn-danger" @click="removeModel(key)" v-html="removeObjectButtonText"></button>
+                    </div>
+                </div>
             </div>
         </template>
 
@@ -74,8 +82,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="btn-group float-right" role="group" aria-label="Basic example">
-                            <button v-if="canAdd" type="button" class="btn btn-sm btn-primary" @click="addModel()" v-html="(schema.addButtonText) ? schema.addButtonText(parentElementName) : ('Add ' + parentElementName)">
-                            </button>
                             <button v-if="canRemove" type="button" class="btn btn-sm btn-danger" @click="emitRemoveKey" v-html="(schema.removeButtonText) ? schema.removeButtonText(parentElementName) : ('Remove ' + parentElementName)"></button>
                             </div>
                         </div>
@@ -83,9 +89,27 @@
                 </div>
                 <div class="card-body">
                     <div v-for="(value, key, index) in model" :key="index" :style="[schema.schema.type == 'Object' ? {backgroundColor:'#f1f1f1', padding:'10px', marginTop:'10px'} : {}]">
-                        <vue-bootstrap4-form-generator :isRoot="is_root" :defaults="defaults" :parentElementIndex="key" :model="value" :parentElementName="parentElementName" :schema="schema.schema" :parentType="schema.type" @update-value="updateValue" @remove-index="removeIndex" @remove-key="removeKey" @add-model-to-array="addModelToArray"/>
-                        <button v-if="canDuplicateObject" type="button" class="btn btn-sm btn-primary" @click="emitDuplicateModel(key,parentElementName)" v-html="(schema.duplicateButtonText) ? schema.duplicateButtonText(parentElementName) : ('Duplicate ' + parentElementName)"></button>
-                        <button v-if="canRemoveObject" type="button" class="btn btn-sm btn-danger" @click="removeModel(key)" v-html="(schema.removeObjectButtonText) ? schema.removeObjectButtonText(parentElementName) : ('Remove ' + parentElementName)"></button>
+                        <vue-bootstrap4-form-generator :isRoot="is_root" 
+                                                        :defaults="defaults" 
+                                                        :parentElementIndex="key" 
+                                                        :model="value" 
+                                                        :parentElementName="parentElementName" 
+                                                        :schema="schema.schema" 
+                                                        :parentType="schema.type" 
+                                                        :duplicate-button-text="(schema.duplicateButtonText) ? schema.duplicateButtonText(parentElementName) : ('Duplicate ' + parentElementName)"
+                                                        :remove-object-button-text="(schema.removeObjectButtonText) ? schema.removeObjectButtonText(parentElementName) : ('Remove ' + parentElementName)"
+                                                        @update-value="updateValue" 
+                                                        @remove-index="removeIndex" 
+                                                        @remove-key="removeKey" 
+                                                        @add-model-to-array="addModelToArray" 
+                                                        @duplicate-model="handleDuplicateModel"/>
+                    </div>
+                    
+                    <div class="row float-right" :class="{'mt-2': (type == 'Array' && schema.schema.elements) }">
+                        <div class="col-md-6">
+                            <button v-if="canAdd" type="button" class="btn btn-sm btn-primary" @click="addModel()" v-html="(schema.addButtonText) ? schema.addButtonText(parentElementName) : ('Add ' + parentElementName)">
+                            </button>                                                        
+                        </div>
                     </div>
                 </div>
             </div>
@@ -146,6 +170,14 @@ export default {
             type: Boolean,
             default: true
         },
+        duplicateButtonText: {
+            type: String,
+            default: ""
+        },
+        removeObjectButtonText: {
+            type: String,
+            default: ""
+        },
     },
     data: function () {
         return {
@@ -183,8 +215,8 @@ export default {
         },
         handleDuplicateModel(payload) {
             let index = payload.key + 1;
-            let model = _.cloneDeep(this.model[payload.parentElementName][payload.key]);
-            this.model[payload.parentElementName].splice(index,0,model);
+            let model = _.cloneDeep(this.model[payload.key]);
+            this.model.splice(index,0,model);
         },
         emitRemoveKey() {
             if (this.isRoot == true && this.schema.type == "Array") {
@@ -325,10 +357,10 @@ export default {
             return (this.type == "Array" && this.schema.canRemove);
         },
         canRemoveObject() {
-            return (this.type == "Array" && this.schema.schema.type == "Object" && this.schema.schema.canRemove);
+            return (this.parentType == "Array" && this.schema.type == "Object" && this.schema.canRemove);
         },
         canDuplicateObject() {
-            return (this.type == "Array" && this.schema.schema.type == "Object" && this.schema.schema.canDuplicate);
+            return (this.parentType == "Array" && this.schema.type == "Object" && this.schema.canDuplicate);
         },
         canAddProperty() {
             return (this.type == "Object" && this.schema.canAddProperty);
